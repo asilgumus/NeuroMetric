@@ -187,7 +187,8 @@ h1,h2,h3,h4{ margin:0; }
   grid-template-columns:minmax(440px,.98fr) minmax(0,1.02fr);
   gap:clamp(40px,5vw,88px);
   align-items:center;
-  padding-top:clamp(40px, 5vw, 80px);
+  padding-top:clamp(88px, 8vw, 144px);
+  padding-bottom:32px;
 }
 .hero-copy{ padding-bottom:64px; }
 .hero h1{
@@ -625,7 +626,7 @@ h1,h2,h3,h4{ margin:0; }
 }
 
 @media (max-width:1060px){
-  .hero-grid{ grid-template-columns:1fr; padding-top:64px; }
+  .hero-grid{ grid-template-columns:1fr; padding-top:88px; }
   .hero-copy{ padding-bottom:44px; }
   .panel{ max-width:640px; }
   .hero-stats{ grid-template-columns:repeat(2,1fr); gap:22px 32px; margin-bottom:48px; }
@@ -685,7 +686,7 @@ h1,h2,h3,h4{ margin:0; }
 @media (min-width:761px){
   .wrap{max-width:1320px}
   body{font-size:14px}
-  .hero-grid{padding-top:32px;gap:24px}
+  .hero-grid{padding-top:clamp(104px,8vw,144px);padding-bottom:48px;gap:24px}
   .hero h1{font-size:clamp(30px,2.5vw,40px);margin-bottom:14px}
   .lede{font-size:15px;margin-bottom:24px}
   .eyebrow{font-size:clamp(21px,1.6vw,26px)}
