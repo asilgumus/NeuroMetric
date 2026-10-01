@@ -548,7 +548,7 @@
       summary = (rate > 0 ? "Brain-age gap increasing ↗" : rate < 0 ? "Brain-age gap decreasing ↘" : "Brain-age gap unchanged →") + " · Slope: " + (rate > 0 ? "+" : "") + rate.toFixed(2) + " yr/year · " + Math.round(realTrajectory.elapsed_years * 365.25) + " days";
       setTxt("longitudinalNote", "Same model and preprocessing; QC approved. Model change is descriptive, not a validated biological aging rate.");
     } else if (c.real && realTrajectory && values.length > 1) {
-      setTxt("longitudinalNote", "Longitudinal patient · Change rate withheld: " + realTrajectory.withheld_reasons.join(", ") + ".");
+      setTxt("longitudinalNote", "Longitudinal patient · Change rate not yet evaluated.");
     }
     setTxt("trajectorySummary", summary);
     chart.setAttribute("aria-label", c.real ? "Observed brain age gap across " + values.length + " scan(s); no diagnostic inference." : "Illustrative brain age gap trajectory with " + values.length + " invented visits");
