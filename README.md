@@ -13,26 +13,6 @@ Two components:
    from real model outputs and Grad-CAM explanations. It does not upload the
    visitor's MRI, and it runs no analysis (`DATA_SOURCES.md`).
 
-## Results
-
-Locked held-out evaluation of the current best model (V3 fine-tuned SFCN,
-`contrast-cont4` checkpoint, epoch 22). The checkpoint was selected by
-validation MAE only; held-out results were not used to guide tuning.
-
-| Split | n | MAE | RMSE | R² | ±5 years |
-|---|---:|---:|---:|---:|---:|
-| Validation (IXI+SALD+NIMH) | 218 | 3.41 | — | — | — |
-| IXI historical test | 85 | 3.60 | 4.34 | 0.935 | 76.5% |
-| DLBS (external cohort) | 464 | 5.17 | 7.20 | 0.842 | 60.3% |
-
-Previous generation (V2 ensemble, 4 CNN1 members): IXI test MAE **6.49** years
-(single-member fine-tune: 6.76; training-age mean: 14.69) — details in
-`docs/DELIVERY.md`. The model queue and experiment log live in `docs/MODEL.md`.
-
-Full catalogue: **1,691 distinct people** (924 train / 218 validation / 85
-historical IXI test / 464 external DLBS) — `artifacts/v3/catalog/summary.json`;
-source versions, licenses and provenance in `v3_data.py`.
-
 ## Repository layout
 
 ```
