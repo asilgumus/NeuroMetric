@@ -681,3 +681,27 @@ h1,h2,h3,h4{ margin:0; }
 @media (min-width:761px) and (max-width:1000px){
   .hero-grid{grid-template-columns:minmax(0,1fr)}
 }
+
+@media (min-width:761px){
+  .wrap{max-width:1440px}
+  body{font-size:14px}
+  .hero-grid{padding-top:40px;gap:28px}
+  .hero h1{font-size:clamp(32px,2.8vw,46px);margin-bottom:16px}
+  .lede{font-size:15px;margin-bottom:24px}
+  .eyebrow{font-size:clamp(23px,1.8vw,29px)}
+  .statement,#why .statement{font-size:20px}
+  .sec-lede,#why .sec-lede,.trust-sub{font-size:15px}
+  .sec,.dash,.trust,.usecases{padding-block:48px}
+  .panel,.bcard,.report,.tslide{padding:18px}
+  .panel-title,.bcard h3,.tinfo h3{font-size:18px}
+  .panel-label,.case-lab{font-size:12px}
+  .psel-wrap select{font-size:14px;padding-block:10px}
+  .stat b{font-size:26px}
+  .pad-val{font-size:40px}
+  .bcard p,.brow p,.dash-lede,.dn,.tbio{font-size:14px}
+  .tquote{font-size:16px}
+  .btn{font-size:13px;padding:11px 18px}
+  .nav-inner{height:60px}
+  .brand-mark{width:42px;height:42px}
+  .foot{padding-top:48px}
+}
