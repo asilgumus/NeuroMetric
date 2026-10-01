@@ -6,6 +6,9 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'report.html'), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+assert.ok(!html.includes('Review the age estimate and explore the MRI explanation.'));
+assert.ok(!html.includes('Healthy-control percentile:'));
+assert.match(html, /<details class="dsec regional-details">/);
 class Element {
   constructor() { this.children = []; this.attributes = {}; this.listeners = {}; this.style = {setProperty(){}}; }
   addEventListener(type, listener) { this.listeners[type] = listener; }
