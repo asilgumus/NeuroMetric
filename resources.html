@@ -75,7 +75,7 @@
     <div class="sec-head">
       <p class="eyebrow">Resources</p>
       <h2 class="statement">What we have built, and what remains to validate.</h2>
-      <p class="sec-lede">Implementation facts and validation results for the research prototype. Dashboard case values are illustrative; measured metrics below come from saved validation predictions.</p>
+      <p class="sec-lede">Implementation facts and validation results for the research prototype. Selected dashboard cases carry real model outputs and are labeled there. Metrics below come from saved validation and held-out test predictions.</p>
     </div>
 
     <section class="res-block">
@@ -83,10 +83,10 @@
       <div class="kv-wrap">
         <div class="res-kv"><b>Intended use</b><p>Research-only estimation of chronological age from T1 MRI using a pretrained, fine-tuned SFCN. Brain-age gap is predicted minus chronological age; it is not ground-truth biological age.</p></div>
         <div class="res-kv"><b>Inputs</b><p>The local pipeline uses 3D T1-weighted NIfTI (.nii / .nii.gz); the OASIS preparation tool also reads Analyze .img/.hdr pairs. SynthStrip brain extraction, FSL FAST bias correction and 12-DOF FLIRT alignment to 1 mm MNI precede a 160 × 192 × 160 SFCN input. No browser upload or DICOM service is implemented.</p></div>
-        <div class="res-kv"><b>Outputs</b><p>Whole-brain predicted age, raw age gap and registration QC. The regional dashboard is available with illustrative values; region-specific model validation and actual attention heatmaps remain pending. No validated percentile or individual confidence interval is available.</p></div>
-        <div class="res-kv"><b>Performance</b><p>Saved deeper-cont3 checkpoint: 218 validation participants, MAE 3.446 years, ±1-year coverage 19.27% (42/218), rounded-year match 12.84% (28/218). Refine-cont1 has higher ±1-year coverage, 21.56% (47/218). These are validation-selection results, not independent test or clinical accuracy. Test–retest ICC is unmeasured.</p></div>
-        <div class="res-kv"><b>Limitations</b><p>Not a diagnostic device. Alzheimer-cohort evaluation, independent test performance, individual uncertainty, regional validity and longitudinal reliability remain unconfirmed. Repeated validation tuning can inflate estimates. Pretraining overlap with OASIS is unaudited; exploratory results cannot be called independent clinical validation.</p></div>
-        <div class="res-kv"><b>Version</b><p>Fine-tuned 3D SFCN; deeper-cont3 is the documented completed checkpoint for these metrics. ResNet was also explored; no four-model ensemble or clinical calibration is claimed. Subsequent runs must be compared before selecting a final model.</p></div>
+        <div class="res-kv"><b>Outputs</b><p>Whole-brain predicted age, raw age gap and registration QC. The regional dashboard is available with illustrative regional values; region-specific validation remains pending. Selected MRI viewers show real signed Grad-CAM. No validated percentile or individual confidence interval is available.</p></div>
+        <div class="res-kv"><b>Performance</b><p>Locked held-out evaluation of the current best checkpoint (V3 fine-tuned SFCN, contrast-cont4): 218 validation participants (MAE 3.41 years); IXI historical test, 85 scans (MAE 3.60 — R² 0.935, 76.5% within ±5 years); external DLBS cohort, 464 scans (MAE 5.17 — R² 0.842, 60.3% within ±5 years). The checkpoint was selected by validation MAE only. These are research results, not clinical accuracy; test–retest ICC is unmeasured.</p></div>
+        <div class="res-kv"><b>Limitations</b><p>Not a diagnostic device. Alzheimer-cohort evaluation, clinical validation, individual uncertainty, regional validity and longitudinal reliability remain unconfirmed. Repeated validation tuning can inflate estimates. Pretraining overlap with OASIS is unaudited; exploratory results cannot be called independent clinical validation.</p></div>
+        <div class="res-kv"><b>Version</b><p>Fine-tuned 3D SFCN; contrast-cont4 (epoch 22) is the documented current checkpoint. An earlier generation, the V2 CNN1 ensemble, reached test MAE 6.49 on the IXI split; no clinical calibration is claimed. Subsequent runs must be compared before selecting a final model.</p></div>
       </div>
     </section>
 
@@ -95,7 +95,7 @@
       <ul class="res-list">
         <li><u>Model</u><i>completed</i><span>Pretrained SFCN fine-tuning on 923 usable IXI/SALD/NIMH training participants; fixed 218-person validation and saved checkpoint hashes.</span></li>
         <li><u>OASIS-1</u><i>in progress</i><span>Authorized download and automated preprocessing of baseline T1 scans for up to 416 people. Research cohort includes 100 CDR-defined dementia cases. This does not establish biomarker-confirmed Alzheimer diagnosis for every case.</span></li>
-        <li><u>Dashboard</u><i>demo</i><span>Whole-brain and regional presentation, schematic heatmap and illustrative visit history. Model-derived heatmaps and longitudinal validation remain future work.</span></li>
+        <li><u>Dashboard</u><i>demo</i><span>Whole-brain and regional presentation, real signed Grad-CAM on selected cases and recorded OASIS-2 visit histories. Validated longitudinal change rates remain future work.</span></li>
       </ul>
     </section>
 
