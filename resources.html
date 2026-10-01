@@ -98,9 +98,9 @@
     <div class="sec-head">
       <p class="eyebrow">Resources</p>
       <h1>The research behind NeuroMetric.</h1>
-      <p class="sec-lede">How the model works, what we measured, and where the data comes from. A transparent technical reference for the precomputed research demo.</p>
+      <p class="sec-lede">How the model works, what the dashboard includes, and where the data comes from. A technical reference for the precomputed research demo.</p>
     </div>
-    <nav class="res-nav" aria-label="Resource sections"><a href="#model-card">Model &amp; pipeline</a><a href="#performance">Performance</a><a href="#releases">Implemented features</a><a href="#data">Data &amp; privacy</a></nav>
+    <nav class="res-nav" aria-label="Resource sections"><a href="#model-card">Model &amp; pipeline</a><a href="#releases">Implemented features</a><a href="#data">Data &amp; privacy</a></nav>
 
     <section class="res-block">
       <h2 class="statement" id="model-card" style="scroll-margin-top:80px">Model &amp; pipeline</h2>
@@ -111,16 +111,6 @@
         <div class="res-kv"><b>Limitations</b><p>Not a diagnostic device. Alzheimer-cohort evaluation, clinical validation, individual uncertainty, regional validity and longitudinal reliability remain unconfirmed. Repeated validation tuning can inflate estimates. Pretraining overlap with OASIS is unaudited; exploratory results cannot be called independent clinical validation.</p></div>
         <div class="res-kv"><b>Version</b><p>Pretrained, fine-tuned 3D SFCN · contrast-cont4 · best checkpoint at epoch 22. PyTorch inference uses the saved checkpoint; the website displays precomputed results and does not run the model in the browser.</p></div>
       </div>
-    </section>
-
-    <section class="res-block" aria-labelledby="performance">
-      <h2 class="statement" id="performance">Held-out performance</h2>
-      <p class="res-intro">Measured from saved predictions of the same checkpoint. MAE is mean absolute chronological-age error; lower is better. Selected dashboard examples are not representative of overall accuracy.</p>
-      <div class="res-metrics">
-        <article class="res-metric"><h3>IXI · historical test split</h3><strong class="res-number">3.60 <small>years MAE</small></strong><p>85 scans · R² 0.935</p><p>Within ±1 year: 11.8% · Within ±5 years: 76.5%</p><p>Rounded-year match: 3.5% (3 / 85)</p></article>
-        <article class="res-metric"><h3>DLBS · external cohort</h3><strong class="res-number">5.17 <small>years MAE</small></strong><p>464 scans · R² 0.842</p><p>Within ±1 year: 14.9% · Within ±5 years: 60.3%</p><p>Rounded-year match: 7.5% (35 / 464)</p></article>
-      </div>
-      <p class="res-intro">Checkpoint selection used validation MAE, not these held-out results. These figures measure chronological-age prediction, not Alzheimer detection, biological-age accuracy or clinical safety.</p>
     </section>
 
     <section class="res-block">

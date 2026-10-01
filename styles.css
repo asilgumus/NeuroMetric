@@ -565,7 +565,7 @@ h1,h2,h3,h4{ margin:0; }
 
 /* ---------- footer ---------- */
 .foot{ background:var(--dark); color:#9FB1C4; padding:72px 0 32px; }
-.foot-grid{ display:grid; grid-template-columns:1.35fr .6fr .6fr 1.25fr; gap:clamp(28px,4vw,64px); }
+.foot-grid{ display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr); gap:clamp(28px,4vw,64px); }
 .fbrand .brand-text{ color:#EDF3FA; }
 /* keep the logo visible on dark: white badge chip */
 .fbrand .brand-mark{
@@ -621,7 +621,7 @@ h1,h2,h3,h4{ margin:0; }
   .long-grid{ grid-template-columns:1fr; }
   .brow{ grid-template-columns:1fr; gap:24px; }
   .brow .viz{ margin-top:6px; }
-  .foot-grid{ grid-template-columns:1fr 1fr; gap:40px; }
+  .foot-grid{ grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr); gap:28px; }
 }
 
 @media (max-width:1060px){
