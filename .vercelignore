@@ -1,0 +1,15 @@
+data
+artifacts
+backups
+.venv
+.cache
+dist-demo
+.env.local
+*.pt
+*.nii
+*.nii.gz
+*.npz
+*.bval
+*.bvec
+docs-internal
+negation_artifacts

@@ -40,3 +40,5 @@ backups/
 Thumbs.db
 *.swp
 *.bak
+.vercel
+.env*
