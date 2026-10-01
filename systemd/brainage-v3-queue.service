@@ -1,0 +1,14 @@
+[Unit]
+Description=BrainAGE V3 Kaggle preparation and merge queue
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/asil/Documents/beyin-yasi-prediction
+Environment=KAGGLE_CONFIG_DIR=/home/asil/.kaggle
+ExecStart=/usr/bin/python /home/asil/Documents/beyin-yasi-prediction/tools/v3_queue.py --poll-seconds 900
+Restart=no
+
+[Install]
+WantedBy=default.target

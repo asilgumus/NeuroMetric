@@ -1,0 +1,12 @@
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.14.1
+scikit-learn==1.5.2
+nibabel==5.3.2
+nipype==1.10.0
+xlrd==2.0.1
+matplotlib==3.9.2
+torch>=2.4,<3
+requests>=2.32,<3
+openpyxl==3.1.5
+nipreps-synthstrip==0.0.1

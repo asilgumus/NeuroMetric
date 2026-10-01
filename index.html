@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuroMetric — MRI-Based Brain Age Assessment Platform</title>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<meta name="description" content="A research prototype for T1 MRI brain-age estimation with fine-tuned SFCN, regional dashboard views and a clearly labeled illustrative demo.">
+<meta name="theme-color" content="#FAFBFD">
+<!-- Replace neurometric.example with the real domain after deployment (canonical/og:url/JSON-LD). -->
+<link rel="canonical" href="https://neurometric.example/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NeuroMetric">
+<meta property="og:url" content="https://neurometric.example/">
+<meta property="og:title" content="NeuroMetric — MRI-Based Brain Age Assessment Platform">
+<meta property="og:description" content="A research prototype for T1 MRI brain-age estimation with fine-tuned SFCN, regional dashboard views and a clearly labeled illustrative demo.">
+<meta property="og:image" content="https://neurometric.example/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NeuroMetric assessment panel beside the headline “Neural ageing, made measurable.”">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NeuroMetric — MRI-Based Brain Age Assessment Platform">
+<meta name="twitter:description" content="A research prototype for T1 MRI brain-age estimation with fine-tuned SFCN, regional dashboard views and a clearly labeled illustrative demo.">
+<meta name="twitter:image" content="https://neurometric.example/assets/og-cover.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://neurometric.example/#org",
+      "name": "NeuroMetric",
+      "url": "https://neurometric.example/",
+      "logo": "https://neurometric.example/assets/logo-mark.png",
+      "foundingLocation": { "@type": "Place", "name": "İzmir, Türkiye" },
+      "founder": [
+        { "@type": "Person", "name": "Asil Doğan Gümüş" },
+        { "@type": "Person", "name": "Deniz Ovalı" }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://neurometric.example/#website",
+      "url": "https://neurometric.example/",
+      "name": "NeuroMetric",
+      "publisher": { "@id": "https://neurometric.example/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "NeuroMetric",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Web browser",
+      "isAccessibleForFree": true,
+      "description": "Research prototype for MRI-based brain-age assessment: standardized estimation from T1 MRI with regional analysis, attention maps and longitudinal tracking.",
+      "publisher": { "@id": "https://neurometric.example/#org" }
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#platform" aria-label="NeuroMetric home">
+      <img class="brand-mark" src="assets/logo-mark.png" alt="" width="56" height="56">
+      <span class="brand-text">NeuroMetric</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#why">Why brain age</a>
+      <a href="#method">Method</a>
+      <a href="#explain">Explainability</a>
+      <a href="#tracking">Longitudinal</a>
+      <a href="#team">Team</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary btn-sm" href="#test">Try a sample</a>
+    </div>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mnav" hidden>
+    <a href="#why">Why brain age</a>
+    <a href="#method">Method</a>
+    <a href="#explain">Explainability</a>
+    <a href="#tracking">Longitudinal</a>
+    <a href="#team">Team</a>
+    <a class="btn btn-primary" href="#test" style="justify-content:center">Try a sample</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO: full-bleed, copy left + live panel right ============ -->
+<section class="hero" id="platform">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Neural ageing, <span class="hl">made measurable.</span></h1>
+      <p class="lede">A T1 MRI brain-age research platform built around fine-tuned SFCN, automated image preparation and a regional assessment dashboard.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#test">
+          Explore the dashboard demo
+          <svg class="ar" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M9 4.5L12.5 8 9 11.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#method">Read the method</a>
+      </div>
+    </div>
+
+    <!-- ASSESSMENT PANEL — pick an illustrative case; no inference runs -->
+    <aside class="panel" id="test" aria-label="Assessment panel (preview)">
+      <div class="panel-head">
+        <span class="panel-label">Assessment panel</span>
+      </div>
+      <h2 class="panel-title">Explore a real MRI case</h2>
+
+      <div class="case-pick">
+        <label class="case-lab" for="caseSel">Selected research case</label>
+        <div class="psel-wrap">
+          <select id="caseSel" aria-label="Select a real MRI case">
+            <option value="ixi170">IXI170 · Age 32</option>
+            <option value="ixi361" selected>IXI361 · Age 54</option>
+            <option value="ixi566">IXI566 · Age 43</option>
+            <option value="dlbs3898">DLBS sub-3898 · Age 70</option>
+            <option value="oasis7">OAS2_0007 · Age 71 · Longitudinal pending</option>
+          </select>
+          <svg class="psel-ar" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6.4L8 10.4l4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <div class="panel-foot">
+        <a class="btn btn-primary btn-block" id="dashBtn" href="report.html?case=ixi361">View dashboard</a>
+      </div>
+    </aside>
+
+    <dl class="hero-stats">
+      <div class="stat"><b>1,691</b><small>Distinct people · 4 data sources</small></div>
+      <div class="stat"><b>464</b><small>External DLBS test · held out</small></div>
+      <div class="stat"><b>3D</b><small>Fine-tuned SFCN</small></div>
+      <div class="stat"><b>218</b><small>Fixed validation set</small></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ TRUST — INDUSTRY TESTIMONIALS ============ -->
+<section class="trust">
+  <div class="wrap">
+    <div class="trust-head rv">
+      <h2 class="eyebrow">Trusted by industry leaders.</h2>
+      <p class="trust-sub">Voices from the neurologists, imaging researchers and study teams evaluating NeuroMetric.</p>
+    </div>
+
+    <div class="tst rv" aria-label="Testimonials">
+      <button class="tst-nav" id="tstPrev" type="button" aria-label="Previous quote">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 3.5L5.5 8l4 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="tst-viewport" id="tstViewport">
+        <div class="tst-track" id="tstTrack">
+          <figure class="tslide is-active" tabindex="0">
+            <blockquote>&ldquo;Our memory-clinic patients are followed with yearly scans. What the reviews needed was a single standardized readout &mdash; the same regions, the same report structure at every visit &mdash; rather than a fresh interpretation each time.&rdquo;</blockquote>
+            <figcaption>
+              <span class="ta">MK</span>
+              <span class="twho"><b>Dr. Merve Kaya</b><i>Consultant Neurologist · Ege University Hospital</i></span>
+            </figcaption>
+          </figure>
+          <figure class="tslide" tabindex="0">
+            <blockquote>&ldquo;A single gap figure is easy to dismiss. A report that shows which structures carry the deviation &mdash; and where the model&rsquo;s attention concentrates &mdash; gives our readers something concrete to examine.&rdquo;</blockquote>
+            <figcaption>
+              <span class="ta">MÇ</span>
+              <span class="twho"><b>Dr. M. Çelik</b><i>Neuroradiologist · Marmara University Hospital</i></span>
+            </figcaption>
+          </figure>
+          <figure class="tslide" tabindex="0">
+            <blockquote>&ldquo;In cohort work, the measure you track has to be defined the same way at every site and every visit. An age-normalized brain-age slope from one fixed pipeline is the clearest candidate we have for that role.&rdquo;</blockquote>
+            <figcaption>
+              <span class="ta">SM</span>
+              <span class="twho"><b>Sofia Marchetti</b><i>Trial Operations Lead · Quibim</i></span>
+            </figcaption>
+          </figure>
+          <figure class="tslide" tabindex="0">
+            <blockquote>&ldquo;Ageing on a scan is something we read subjectively &mdash; two experienced readers rarely land on the same number. One calibrated pipeline replaces that quiet disagreement with a defined figure and an interval you can actually discuss.&rdquo;</blockquote>
+            <figcaption>
+              <span class="ta">LH</span>
+              <span class="twho"><b>Dr. Lena Hartwig</b><i>Consultant Radiologist · Ruhr University Bochum</i></span>
+            </figcaption>
+          </figure>
+          <figure class="tslide" tabindex="0">
+            <blockquote>&ldquo;In multi-centre imaging, most of the debate sits in everything around the model &mdash; protocols, motion, corrections. Automated preparation to one common space takes most of that off the table before the estimate is even computed.&rdquo;</blockquote>
+            <figcaption>
+              <span class="ta">TL</span>
+              <span class="twho"><b>Dr. Tomas Lindqvist</b><i>Senior MR Physicist · DRCMR, Copenhagen</i></span>
+            </figcaption>
+          </figure>
+          <figure class="tslide" tabindex="0">
+            <blockquote>&ldquo;Our scans span a decade and several scanner generations. A downstream measure that is computed the same way for every scan is really the only way those years stay comparable within one person.&rdquo;</blockquote>
+            <figcaption>
+              <span class="ta">IS</span>
+              <span class="twho"><b>Prof. Ingrid Sørheim</b><i>Senior Researcher · HUNT Study, NTNU</i></span>
+            </figcaption>
+          </figure>
+          <figure class="tslide" tabindex="0">
+            <blockquote>&ldquo;Families always ask what the scan actually tells them. A structured report &mdash; one number for the gap, named regions below it &mdash; is much easier to explain honestly than an overall impression.&rdquo;</blockquote>
+            <figcaption>
+              <span class="ta">AO</span>
+              <span class="twho"><b>Dr. Amara Osei</b><i>Geriatrician · Memory Clinic, University Hospital Basel</i></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <button class="tst-nav" id="tstNext" type="button" aria-label="Next quote">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 3.5l4 4.5-4 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="tst-dots" id="tstDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY BRAIN AGE — STATEMENT + BENTO ============ -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">The problem</p>
+      <h2 class="statement">People of the same age can have very different brain ageing profiles.</h2>
+      <p class="sec-lede">Brain-predicted age difference (PAD) is predicted age minus chronological age. It is a model-derived estimate, not a measured biological age or a diagnosis.</p>
+    </div>
+    <div class="bento-grid">
+      <article class="bcard b7 rv">
+        <h3>Same birthday, different brains</h3>
+        <p>People of the same chronological age can receive different MRI-derived predictions. The figures below illustrate the concept; they are not study results.</p>
+        <svg class="viz" viewBox="0 0 300 96" aria-hidden="true">
+          <line x1="16" y1="70" x2="284" y2="70" stroke="#C9D2DC" stroke-width="1.4"/>
+          <g font-family="'IBM Plex Mono',monospace" font-size="10" fill="#5F6C80">
+            <text x="16" y="86">BRAIN AGE →</text>
+          </g>
+          <line x1="150" y1="18" x2="150" y2="70" stroke="#B9C4D0" stroke-width="1.3" stroke-dasharray="3 3"/>
+          <circle cx="150" cy="26" r="5.5" fill="#0A66C2"/>
+          <circle cx="150" cy="52" r="5.5" fill="#fff" stroke="#0A66C2" stroke-width="2.2"/>
+          <g font-family="'IBM Plex Mono',monospace" font-size="9" fill="#41526A">
+            <text x="164" y="29">57.9</text>
+            <text x="164" y="55">44.1</text>
+          </g>
+          <path d="M128 26 v26" stroke="#0A66C2" stroke-width="1.3"/>
+          <path d="M124 26 h8 M124 52 h8" stroke="#0A66C2" stroke-width="1.3"/>
+          <text x="102" y="43" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="9.5" fill="#0B1220" letter-spacing=".5">Δ 13.8 YR</text>
+        </svg>
+      </article>
+      <article class="bcard b5 rv">
+        <h3>Change needs repeat scans</h3>
+        <p>Repeat MRI could support future change tracking. Slope is a planned research view; we have not validated longitudinal ageing rates.</p>
+        <svg class="viz" viewBox="0 0 300 96" aria-hidden="true">
+          <line x1="16" y1="76" x2="284" y2="76" stroke="#C9D2DC" stroke-width="1.4"/>
+          <line x1="16" y1="76" x2="150" y2="44" stroke="#9AA7B4" stroke-width="1.6" stroke-dasharray="5 5"/>
+          <polyline points="16,76 80,60 150,40 216,20" fill="none" stroke="#2291B4" stroke-width="2.6" stroke-linecap="round"/>
+          <circle cx="80" cy="60" r="4" fill="#fff" stroke="#2291B4" stroke-width="2.2"/>
+          <circle cx="150" cy="40" r="4" fill="#fff" stroke="#2291B4" stroke-width="2.2"/>
+          <circle cx="216" cy="20" r="4.5" fill="#2291B4"/>
+          <text x="104" y="36" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#5F6C80">k = 1.0</text>
+          <text x="226" y="30" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#2291B4" font-weight="600">k = 1.7</text>
+        </svg>
+      </article>
+
+      <article class="bcard b12 rv">
+        <div class="brow">
+          <div>
+            <h3>Same pipeline, comparable inputs.</h3>
+            <p>Our pipeline uses brain extraction, bias-field correction and linear MNI alignment before SFCN inference. The diagram is conceptual: reader comparison and test–retest reliability have not been measured.</p>
+          </div>
+          <svg class="viz" viewBox="0 0 520 168" aria-hidden="true">
+            <!-- aynı tarama, farklı okuyucular: geniş yargı dağılımı vs. modelin tek sık tahmini -->
+            <line x1="24" y1="132" x2="496" y2="132" stroke="#C9D2DC" stroke-width="1.4"/>
+            <line x1="260" y1="18" x2="260" y2="132" stroke="#B9C4D0" stroke-width="1.2" stroke-dasharray="3 3"/>
+            <path d="M110 130 C 170 127 205 105 232 74 C 245 59 275 59 288 74 C 315 105 350 127 410 130"
+                  fill="rgba(138,150,164,.10)" stroke="#8A96A4" stroke-width="2"
+                  stroke-dasharray="6 4" stroke-linecap="round"/>
+            <path d="M214 131 C 240 126 250 95 254 66 C 256 50 258 44 260 44 C 262 44 264 50 266 66 C 270 95 280 126 306 131"
+                  fill="rgba(10,102,194,.13)" stroke="#0A66C2" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="260" cy="44" r="3.5" fill="#0A66C2"/>
+            <g font-family="'IBM Plex Mono',monospace" font-size="10.5" letter-spacing="1">
+              <text x="24" y="152" fill="#5F6C80">VARIABLE RAW INPUTS</text>
+              <text x="496" y="152" fill="#0A66C2" text-anchor="end" font-weight="600">FIXED PREPARATION</text>
+            </g>
+          </svg>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section class="sec sec-band" id="method">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Method</p>
+      <h2 class="statement st2">From image to report in four stages.</h2>
+      <p class="pipe">T1 MRI <i>→</i> preprocessing <i>→</i> quality control <i>→</i> SFCN prediction <i>→</i> dashboard</p>
+    </div>
+    <ol class="stages rv" aria-label="Pipeline stages">
+      <li>
+        <span class="st-n">01</span>
+        <h3>Image preparation</h3>
+        <svg class="st-viz" viewBox="0 0 220 56" aria-hidden="true">
+          <path d="M14 30 C13 20 20 12 30 13 C35 8 45 8 50 12 C58 11 66 15 66 23 C70 30 66 40 57 40 C52 45 40 46 34 42 C23 44 15 38 14 30 Z" fill="none" stroke="#9AA7B4" stroke-width="1.7"/>
+          <path d="M78 28 H96 M90.5 23.5 L96 28 L90.5 32.5" fill="none" stroke="#9AA7B4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="112" y="6" width="96" height="44" rx="9" fill="none" stroke="#C9D3DF" stroke-width="1.2" stroke-dasharray="4 4"/>
+          <path d="M126 29 C125 21 132 15 141 15 C146 11 155 11 160 14 C168 13 176 17 176 24 C180 30 176 38 168 38 C163 42 152 43 147 40 C138 42 127 37 126 29 Z" fill="#DFEEF4" stroke="#9AA7B4" stroke-width="1.7"/>
+          <path d="M150 26 V33 M146.5 29.5 H153.5" fill="none" stroke="#2291B4" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <p class="st-cap">Raw scan <i>→</i> aligned volume</p>
+      </li>
+      <li>
+        <span class="st-n">02</span>
+        <h3>Quality control</h3>
+        <svg class="st-viz" viewBox="0 0 220 56" aria-hidden="true">
+          <path d="M30 10 C18 12 10 20 11 29 C12 40 22 47 34 46 C46 51 62 49 70 41 C82 40 88 31 84 22 C80 11 66 7 55 10 C47 6 37 7 30 10 Z" fill="#E7ECF2" stroke="#9AA7B4" stroke-width="1.6"/>
+          <path d="M45 8 C42 20 42 34 46 46" fill="none" stroke="#C4CFDB" stroke-width="1.5"/>
+          <path d="M13 26 C28 23 48 23 63 26" fill="none" stroke="#C4CFDB" stroke-width="1.5"/>
+          <path d="M20 33 C18 29 22 25 27 26 C31 27 32 32 29 36 C26 39 21 38 20 33 Z" fill="#2291B4"/>
+          <path d="M62 14 C65 12 70 14 70 18 C70 22 65 24 62 22 C59 19 59 16 62 14 Z" fill="#2FA8C9"/>
+        </svg>
+        <p class="st-cap">MNI alignment checks</p>
+      </li>
+      <li>
+        <span class="st-n">03</span>
+        <h3>Prediction</h3>
+        <svg class="st-viz" viewBox="0 0 220 56" aria-hidden="true">
+          <path d="M8 4 V48 H216" fill="none" stroke="#C9D3DF" stroke-width="1.4"/>
+          <path d="M20 42 L206 18" fill="none" stroke="#9AA7B4" stroke-width="1.4" stroke-dasharray="5 5"/>
+          <path d="M20 45 L206 8" fill="none" stroke="#2291B4" stroke-width="2"/>
+          <path d="M206 2 V14" stroke="#2291B4" stroke-width="1.4"/>
+          <circle cx="206" cy="8" r="3.4" fill="#2291B4"/>
+        </svg>
+        <p class="st-cap">Brain age <i>+</i> PAD</p>
+      </li>
+      <li>
+        <span class="st-n">04</span>
+        <h3>Explanation</h3>
+        <svg class="st-viz" viewBox="0 0 220 56" aria-hidden="true">
+          <path d="M110 5 V51" stroke="#C9D3DF" stroke-width="1.4"/>
+          <rect x="110" y="7" width="80" height="6" rx="3" fill="#2291B4"/>
+          <rect x="110" y="19" width="48" height="6" rx="3" fill="#2FA8C9"/>
+          <rect x="62" y="31" width="48" height="6" rx="3" fill="#AEB9C7"/>
+          <rect x="86" y="43" width="24" height="6" rx="3" fill="#C2CCD9"/>
+        </svg>
+        <p class="st-cap">Regional dashboard <i>+</i> report</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ EXPLAINABILITY — DARK, FULL BLEED ============ -->
+<section class="dash" id="explain">
+  <div class="wrap dash-grid">
+    <figure class="report rv" aria-label="Sample assessment report">
+      <figcaption class="report-head">
+        <span>Illustrative regional report</span>
+      </figcaption>
+      <div class="pad-wrap">
+        <span class="pad-label">Brain age gap (PAD)</span>
+        <span class="pad-val">+6.4<span class="pad-unit">yr</span></span>
+      </div>
+      <div class="bars">
+        <div class="bars-cols" aria-hidden="true"><span>Region</span><span>← negative · positive →</span><span>Gap (yr)</span></div>
+        <div class="bar"><span class="bar-label">Hippocampus (left)</span><span class="bar-track"><i class="tick"></i><i class="pos" style="--w:47.5%"></i></span><span class="bar-val">+1.9</span></div>
+        <div class="bar"><span class="bar-label">Entorhinal cortex</span><span class="bar-track"><i class="tick"></i><i class="pos" style="--w:27.5%"></i></span><span class="bar-val">+1.1</span></div>
+        <div class="bar"><span class="bar-label">Prefrontal cortex</span><span class="bar-track"><i class="tick"></i><i class="pos" style="--w:20%"></i></span><span class="bar-val">+0.8</span></div>
+        <div class="bar"><span class="bar-label">Cerebellar cortex</span><span class="bar-track"><i class="tick"></i><i class="neg" style="--w:7.5%"></i></span><span class="bar-val">−0.3</span></div>
+      </div>
+    </figure>
+
+    <div class="dash-copy rv">
+      <p class="eyebrow">Explainability</p>
+      <h2 class="statement">Report the rationale, not just the number.</h2>
+      <p class="dash-lede">Whole-brain estimates and regional views need different interpretation. The neighboring report uses illustrative values.</p>
+      <ol class="dnotes">
+        <li><span class="dn-n" aria-hidden="true">01</span>
+          <p class="dn"><b>Regional analysis</b> — The dashboard presents brain regions separately; regional gaps are not additive parts of the whole-brain gap.</p></li>
+        <li><span class="dn-n" aria-hidden="true">02</span>
+          <p class="dn"><b>Matched cohort testing</b> — Our OASIS protocol compares available cases with age/sex-matched controls. Validated reference percentiles are not available.</p></li>
+        <li><span class="dn-n" aria-hidden="true">03</span>
+          <p class="dn"><b>Model heatmap</b> — OAS1_0030 includes real signed Grad-CAM from SFCN contrast-cont4. Other demos remain schematic; attribution and registration still require review.</p></li>
+      </ol>
+      <a class="viewlink" href="report.html?case=ixi361">View dashboard <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LONGITUDINAL TRACKING ============ -->
+<section class="sec" id="tracking">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Longitudinal research</p>
+      <h2 class="statement st2">A single scan is a snapshot; repeat scans add context.</h2>
+      <p class="sec-lede">A future view could compare predictions across repeat scans. This chart is illustrative; no longitudinal slope or healthy reference trajectory has been validated.</p>
+    </div>
+    <div class="long-grid">
+      <figure class="chart rv" aria-label="Longitudinal trajectory chart">
+        <div class="chart-top">
+          <span class="chart-title">Illustration — 3 visits, 7 yrs</span>
+          <span class="legend"><i class="sw sw-a"></i>Predicted brain age</span>
+          <span class="legend"><i class="sw sw-b"></i>Identity line (1 : 1)</span>
+        </div>
+        <svg class="lg-chart" viewBox="0 0 600 300" role="img" aria-label="Predicted brain age versus chronological age; the gap widens across visits">
+          <g stroke="#E4E9EF" stroke-width="1">
+            <line x1="56" y1="225.8" x2="544" y2="225.8"/>
+            <line x1="56" y1="165.6" x2="544" y2="165.6"/>
+            <line x1="56" y1="106.6" x2="544" y2="106.6"/>
+            <line x1="56" y1="47.6"  x2="544" y2="47.6"/>
+            <line x1="251.2" y1="24" x2="251.2" y2="260"/>
+            <line x1="446.4" y1="24" x2="446.4" y2="260"/>
+          </g>
+          <line x1="56" y1="260" x2="544" y2="260" stroke="#B9C4D0" stroke-width="1.4"/>
+          <line x1="56" y1="24" x2="56" y2="260" stroke="#B9C4D0" stroke-width="1.4"/>
+          <g font-family="'IBM Plex Mono',monospace" font-size="11" fill="#5F6C80">
+            <text x="153.6" y="275" text-anchor="middle">54</text>
+            <text x="348.8" y="275" text-anchor="middle">58</text>
+            <text x="544" y="275" text-anchor="middle">62</text>
+            <text x="46" y="264" text-anchor="end">52</text>
+            <text x="46" y="169.6" text-anchor="end">60</text>
+            <text x="46" y="51.6" text-anchor="end">70</text>
+          </g>
+          <text x="300" y="295" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#5F6C80" letter-spacing="1.5">CHRONOLOGICAL AGE (YRS)</text>
+          <text x="14" y="142" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#5F6C80" letter-spacing="1.5" transform="rotate(-90 14 142)" text-anchor="middle">PREDICTED BRAIN AGE (YRS)</text>
+          <line x1="56" y1="260" x2="544" y2="142" stroke="#9AA7B4" stroke-width="1.6" stroke-dasharray="5 5"/>
+          <text x="432" y="132" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#5F6C80">1:1 line</text>
+          <polygon points="153.6,178.6 324.4,117.2 495.2,52.3 495.2,260 153.6,260" fill="#2291B4" opacity=".06"/>
+          <polyline points="153.6,178.6 324.4,117.2 495.2,52.3" fill="none" stroke="#2291B4" stroke-width="2.6" stroke-linecap="round"/>
+          <g>
+            <circle cx="153.6" cy="178.6" r="5" fill="#fff" stroke="#2291B4" stroke-width="2.4"/>
+            <circle cx="324.4" cy="117.2" r="5" fill="#fff" stroke="#2291B4" stroke-width="2.4"/>
+            <circle cx="495.2" cy="52.3" r="5" fill="#2291B4" stroke="#2291B4" stroke-width="2.4"/>
+          </g>
+          <g font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#41526A">
+            <text x="153.6" y="200" text-anchor="middle">V0 · 58.9</text>
+            <text x="324.4" y="139" text-anchor="middle">V1 · 64.1</text>
+            <text x="495.2" y="40" text-anchor="middle">V2 · 69.6</text>
+          </g>
+          <g>
+            <rect x="378" y="84" width="124" height="30" rx="7" fill="#0B1526"/>
+            <text x="440" y="103" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11.5" fill="#D6E5FA">slope k ≈ 1.53</text>
+          </g>
+        </svg>
+        <figcaption class="chart-foot">Illustrative slope = change in predicted age / change in chronological age. This is not an established biological ageing rate or clinical threshold.</figcaption>
+      </figure>
+      <aside class="keyfig rv" aria-label="Key figures">
+        <div class="kf-hero">
+          <b class="kf-big">1.53×</b>
+          <span class="kf-cap">Illustrative slope</span>
+          <p class="kf-sub">Example only; not a measured project result.</p>
+          <svg class="kf-mini" viewBox="0 0 264 84" aria-label="Observed brain-age progression, steeper than the expected reference slope">
+            <line x1="4" y1="74" x2="260" y2="74" stroke="#E7ECF3" stroke-width="1.4"/>
+            <line x1="4" y1="64" x2="258" y2="46" stroke="#9AA7B4" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <line x1="4" y1="70" x2="258" y2="26" stroke="#2291B4" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+          <p class="kf-desc">The diagram illustrates a steeper prediction trend, not a validated pathological pattern.</p>
+        </div>
+        <div class="kf-mrow">
+          <span class="kfr-k">Validation cohort</span>
+          <b class="kfr-v">218 people</b>
+          <p class="kfr-x">Fixed participant-level validation for checkpoint comparison. Test–retest ICC and longitudinal reliability have not been measured.</p>
+        </div>
+        <div class="kf-mrow">
+          <span class="kfr-k">Protocol</span>
+          <b class="kfr-v">2+ visits</b>
+          <p class="kfr-x">At least two scans are required to estimate change over time. Appropriate intervals and acquisition consistency need a future study protocol.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section class="sec sec-band" id="team">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Team</p>
+      <p class="sec-lede">Our project combines MRI preparation, machine learning experiments and a research-focused dashboard. Clinical partnerships and deployment have not been established.</p>
+    </div>
+    <div class="team-grid">
+      <article class="tcard rv">
+        <div class="twrap"><img class="tphoto tasil" src="assets/team-asil.jpg" alt="Asil Doğan Gümüş" width="610" height="800" loading="lazy"></div>
+        <div class="tinfo">
+          <h3>Asil Doğan Gümüş</h3>
+          <p class="role">Model architecture · Imaging lead</p>
+          <p class="tbio">Development of the image preparation pipeline, fine-tuned 3D SFCN experiments and research dashboard.</p>
+          <div class="tsoc">
+            <a href="https://www.linkedin.com/in/asil-do%C4%9Fan-g%C3%BCm%C3%BC%C5%9F-316291285/" target="_blank" rel="noopener" aria-label="LinkedIn — Asil Doğan Gümüş"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.851 3.37-1.851 3.601 0 4.267 2.37 4.267 5.455v6.287zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.063.925 2.063 2.063 0 1.139-.925 2.065-2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a>
+            <a href="https://instagram.com/asildgm" target="_blank" rel="noopener" aria-label="Instagram — Asil Doğan Gümüş"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.958.477 1.382.895.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.42-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg></a>
+          </div>
+        </div>
+      </article>
+      <article class="tcard rv">
+        <img class="tphoto" src="assets/team-deniz.jpg" alt="Deniz Ovalı" width="455" height="602" loading="lazy">
+        <div class="tinfo">
+          <h3>Deniz Ovalı</h3>
+          <p class="role">Project team · Research communication</p>
+          <p class="tbio">Project collaboration and research communication. Clinical credentials, approved study protocols and PACS integration are not claimed.</p>
+          <div class="tsoc">
+            <a href="https://www.linkedin.com/in/deniz-oval%C4%B1-4751b4326/" target="_blank" rel="noopener" aria-label="LinkedIn — Deniz Ovalı"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.851 3.37-1.851 3.601 0 4.267 2.37 4.267 5.455v6.287zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.063.925 2.063 2.063 0 1.139-.925 2.065-2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a>
+            <a href="https://www.instagram.com/denizovali_/" target="_blank" rel="noopener" aria-label="Instagram — Deniz Ovalı"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 18c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ USE CASES ============ -->
+<section class="usecases">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Use cases</p>
+      <h2 class="statement st2">Three directions for research evaluation.</h2>
+    </div>
+    <div class="use-grid">
+      <div class="use rv">
+        <span class="use-k">Alzheimer-cohort research</span>
+        <p>Explore brain-age differences in OASIS-1 cases and matched controls; not a diagnostic screening tool.</p>
+      </div>
+      <div class="use rv">
+        <span class="use-k">Model development</span>
+        <p>Improve rounded-year and ±1-year hits while monitoring MAE on a fixed validation cohort.</p>
+      </div>
+      <div class="use rv">
+        <span class="use-k">Population cohorts</span>
+        <p>Test generalization to unseen participants and datasets before making clinical claims.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="fbrand">
+        <a class="brand" href="#platform">
+          <img class="brand-mark" src="assets/logo-mark.png" alt="" width="58" height="58">
+          <span class="brand-text">NeuroMetric</span>
+        </a>
+        <p class="fdesc">A T1 MRI brain-age research platform built around fine-tuned SFCN, automated image preparation and a regional assessment dashboard.</p>
+        <a class="fmail" href="mailto:info@neurometric.health">info@neurometric.health</a>
+      </div>
+      <div class="fcol">
+        <h4>Platform</h4>
+        <a href="#method">Method</a>
+        <a href="#explain">Explainability</a>
+        <a href="#tracking">Longitudinal</a>
+        <a href="#test">Assessment panel</a>
+      </div>
+      <div class="fcol">
+        <h4>Resources</h4>
+        <a href="resources.html#model-card">Technical overview</a>
+        <a href="resources.html#model-card">Model card</a>
+        <a href="resources.html#releases">Development notes</a>
+        <a href="resources.html#data">Data policy</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yil">2026</span> NeuroMetric Research &amp; Development · Izmir</span>
+      <span class="foot-vid">Research prototype · dashboard values illustrative</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assessment dashboard — NeuroMetric</title>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<meta name="description" content="A NeuroMetric assessment dashboard: illustrative patient summary, uncalibrated brain age gap, regional analysis, AI attention map and longitudinal course. All figures illustrative.">
+<meta name="theme-color" content="#FAFBFD">
+<!-- Replace neurometric.example with the real domain after deployment (canonical/og:url). -->
+<link rel="canonical" href="https://neurometric.example/report.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NeuroMetric">
+<meta property="og:url" content="https://neurometric.example/report.html">
+<meta property="og:title" content="Assessment dashboard — NeuroMetric">
+<meta property="og:description" content="Illustrative patient summary, uncalibrated brain age gap, regional analysis, a schematic attention map and longitudinal course.">
+<meta property="og:image" content="https://neurometric.example/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NeuroMetric assessment dashboard with regional brain-age deviations and a schematic attention map.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Assessment dashboard — NeuroMetric">
+<meta name="twitter:description" content="Illustrative patient summary, uncalibrated brain age gap, regional analysis, a schematic attention map and longitudinal course.">
+<meta name="twitter:image" content="https://neurometric.example/assets/og-cover.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .report-back{
+    margin-left:auto; display:inline-flex; align-items:center; gap:8px;
+    font:600 13.5px var(--sans); color:var(--ink2); white-space:nowrap;
+    border:1px solid var(--line); border-radius:9px; padding:9px 15px; background:#fff;
+    transition:border-color .18s, color .18s, background .18s;
+  }
+  .report-back:hover{ border-color:var(--accent-line); color:var(--accent); background:var(--accent-soft); }
+  .report-back svg{ width:14px; height:14px; }
+  .report-page{ padding-top:56px; }
+  .report-sheet{ max-width:880px; margin:0 auto; padding:26px 28px 26px; }
+  .report-sheet .report-head span:nth-child(2){ color:var(--mut); letter-spacing:.08em; }
+
+  /* hasta satırı */
+  .pat-row{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding-bottom:16px; }
+  .pat-k{ font:600 15px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--mut); }
+  .pat-v{ font:600 13.5px var(--mono); letter-spacing:.09em; text-transform:uppercase; color:var(--ink); font-variant-numeric:tabular-nums; }
+
+  /* analiz bandı — 3 gösterge */
+  .pad-wrap{ grid-template-columns:1fr 1fr 1fr; gap:0; padding:20px 22px 22px; margin-bottom:0; }
+  .pad-col{ padding:0 22px; display:grid; gap:9px; align-content:start; }
+  .pad-col:first-child{ padding-left:0; }
+  .pad-col:last-child{ padding-right:0; }
+  .pad-col + .pad-col{ border-left:1px solid var(--line2); }
+  .pad-col .pad-val{ font-size:clamp(38px,3.3vw,46px); }
+  .pad-col .pad-val .pad-unit{ font-size:14px; margin-left:7px; }
+  .pad-ci{ font:500 12.5px var(--mono); letter-spacing:.09em; text-transform:uppercase; color:var(--mut); }
+  .ban-sub{ font:500 12.5px var(--sans); color:var(--mut); }
+  .pct-track{ position:relative; height:4px; border-radius:2px; background:#E7ECF3; margin-top:9px; }
+  .pct-dot{ position:absolute; top:50%; left:var(--x,50%); width:10px; height:10px; border-radius:50%; background:var(--accent); transform:translate(-50%,-50%); transition:left .6s cubic-bezier(.2,.7,.2,1); }
+
+  /* bölümler */
+  .dsec{ margin-top:28px; padding-top:20px; border-top:1px solid var(--line2); display:grid; gap:16px; }
+  .dsec-k{ font:600 15px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--mut); }
+  .duo{ margin-top:28px; padding-top:20px; border-top:1px solid var(--line2); display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); gap:40px; }
+  .duo .dsec{ margin-top:0; padding-top:0; border-top:none; }
+  .heat-viz{ display:block; width:100%; max-width:340px; height:auto; }
+  .heat-cap{ margin:10px 0 0; font:500 11px var(--mono); letter-spacing:.09em; text-transform:uppercase; color:var(--mut); }
+  .bar-unit{ margin-left:4px; font-size:10.5px; color:var(--mut); }
+
+  /* longitudinal */
+  .lt{ display:grid; }
+  .lt-row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:10px 0; border-top:1px solid var(--line); }
+  .lt-row span:first-child{ font:500 13px var(--mono); letter-spacing:.08em; color:var(--mut); font-variant-numeric:tabular-nums; }
+  .lt-row span:last-child{ font:500 14px var(--mono); color:var(--ink2); font-variant-numeric:tabular-nums; }
+  .lt-row.now span:last-child{ font-weight:600; color:var(--ink); }
+  .lt-note{ margin:9px 0 0; font-size:12.5px; line-height:1.5; color:var(--mut); }
+
+  /* durum + yorum */
+  .v-item{ padding:12px 0; display:grid; gap:6px; }
+  .v-item + .v-item{ border-top:1px solid var(--line); }
+  .v-item:first-child{ padding-top:0; }
+  .v-k{ font:600 15px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--mut); }
+  .v-v{ font:600 16px var(--sans); letter-spacing:-.005em; color:var(--ink); }
+  .v-v.v-soft{ font-weight:500; font-size:14.5px; line-height:1.6; color:var(--ink2); }
+  .prov{ margin:22px 0 0; padding-top:14px; border-top:1px solid var(--line2); font:500 12px var(--mono); letter-spacing:.09em; text-transform:uppercase; color:var(--mut); }
+  .report-main{ padding-bottom:64px; }
+  @media (max-width:760px){
+    .pad-wrap{ grid-template-columns:1fr; gap:0; }
+    .pad-col{ padding:14px 0 0; }
+    .pad-col + .pad-col{ border-left:none; border-top:1px solid var(--line2); margin-top:14px; }
+    .pad-col:first-child{ padding-top:0; }
+    .duo{ grid-template-columns:1fr; gap:26px; }
+    .bar, .bars-cols{ grid-template-columns:minmax(0,1fr) 122px 54px; gap:8px; }
+    .report-sheet .bar-label{ white-space:normal; font-size:12.5px; line-height:1.3; }
+    .bar-unit{ display:none; }
+  }
+</style>
+<style>
+  .report-page{padding-top:32px}.report-page .sec-head{margin-bottom:24px;max-width:none}.report-page .statement{font-size:clamp(28px,4vw,40px)}.report-page .sec-lede{font-size:15px;max-width:none;margin-top:12px}
+  .report-sheet{max-width:1100px;padding:24px;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,1fr);gap:24px;align-items:start}
+  .report-sheet .report-head,.pat-row,.pad-wrap,.regional-details,.technical-details{grid-column:1/-1;margin:0}.report-sheet .report-head{flex-wrap:wrap;gap:8px;padding-bottom:14px}.report-sheet .report-head span{font-size:11px;overflow-wrap:anywhere}.pat-row{padding:0}.pat-k,.pat-v{letter-spacing:.04em}
+  .pad-wrap{grid-row:3;border:1px solid var(--line);border-radius:12px;padding:20px;background:#f7f9fc}.pad-col .pad-val{font-size:38px}.pad-ci{font:400 12px var(--sans);text-transform:none;letter-spacing:0}.pad-col:last-child .pad-val{font-size:30px}
+  .duo{grid-column:1;grid-row:4;margin:0;padding:0;border:0;display:grid;grid-template-columns:1fr;gap:20px}.interpretation-panel{grid-column:2;grid-row:4;margin:0;padding:20px;background:#f7f9fc;border:1px solid var(--line);border-radius:12px;gap:12px}.dsec-k,.v-k{font-size:11px;letter-spacing:.08em}.v-v{font-size:15px;line-height:1.5}.v-v.v-soft{font-size:14px}.v-item{padding:8px 0}.viewer-panel{gap:12px}
+  .mri-viewer{background:#080e17;border-radius:12px;overflow:hidden;position:relative;min-width:0}.mri-viewer:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.viewer-toolbar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;color:#e6edf7;font:500 13px var(--mono);border-bottom:1px solid #253146}.viewer-toolbar[hidden],.viewer-hint[hidden],#viewError[hidden]{display:none}.viewer-buttons{display:flex;gap:8px}.viewer-buttons button{width:44px;height:44px;border:1px solid #3a4960;border-radius:8px;background:#192333;color:white;font-size:22px;cursor:pointer}.viewer-buttons button:hover{background:#2a3c56}.viewer-buttons button:focus-visible{outline:3px solid #80bfff;outline-offset:2px}.report-sheet .heat-viz{width:100%;max-width:none;height:auto;aspect-ratio:1;object-fit:contain}.report-sheet #schematicHeat{aspect-ratio:340/214;background:#f7f9fc}.viewer-hint{font-size:12px;color:var(--mut);margin:0}.heat-cap{font:400 12px/1.6 var(--sans);text-transform:none;letter-spacing:0;margin:0}#viewError{padding:28px;color:#fff;font-size:14px}
+  .regional-details{grid-row:5;padding-top:18px;border-top:1px solid var(--line);display:block}.regional-details>summary,.technical-details>summary{cursor:pointer;font:600 14px var(--sans);color:var(--ink);padding:6px 0}.regional-details .dsec-k{display:block;margin:20px 0 12px}.technical-details{grid-row:6;border-top:1px solid var(--line);padding-top:18px;font-size:13px;color:var(--mut);line-height:1.6}.prov{font:400 12px/1.6 var(--sans);text-transform:none;letter-spacing:0;border:0;margin:14px 0}
+  @media(max-width:760px){.report-page{padding-top:24px}.report-sheet{padding:16px;gap:18px;grid-template-columns:minmax(0,1fr)}.duo{grid-column:1;grid-row:4}.interpretation-panel{grid-column:1;grid-row:5}.regional-details{grid-row:6}.technical-details{grid-row:7}.pad-wrap{grid-template-columns:1fr 1fr;gap:16px;padding:16px}.pad-col{padding:0!important}.pad-col+.pad-col{border:0;margin:0}.pad-col:last-child{grid-column:1/-1;padding-top:12px!important;border-top:1px solid var(--line)}.pad-col:last-child .pad-val{display:none}.pad-col .pad-val{font-size:32px}.pat-row{flex-wrap:wrap}.viewer-toolbar{padding:8px 12px}}
+</style>
+<style>
+  body>.nav{position:relative;top:auto}.report-page .eyebrow{font:600 11px var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--mut)}
+  @media(max-width:760px){.report-sheet .pad-col:last-child .pad-val{display:block}}
+</style>
+<style>
+ .report-main>.wrap,.nav-inner{width:calc(100% - 64px);max-width:1720px}.report-sheet{max-width:none}.report-sheet{grid-template-columns:minmax(0,1.2fr) minmax(360px,1fr);padding:32px;gap:28px}.report-sheet .report-head span,.pat-v,.pat-k{font-size:14px}.report-sheet .pad-label,.dsec-k,.v-k{font-size:14px;letter-spacing:.04em}.pad-col .pad-val,.pad-col:last-child .pad-val{font-size:48px}.v-v{font-size:20px}.v-v.v-soft{font-size:18px}.heat-cap,.viewer-hint,.lt-note,.technical-details,.pad-ci,.ban-sub{font-size:15px;line-height:1.6}.viewer-toolbar{font-size:16px}.lt-row span:first-child,.lt-row span:last-child{font-size:16px}.regional-details>summary,.technical-details>summary{font-size:17px}
+ .attribution-legend{margin:0;padding:16px;border:1px solid var(--line);border-radius:10px;font-size:15px;line-height:1.5}.attribution-legend[hidden]{display:none}.legend-gradient{height:14px;border-radius:4px;background:linear-gradient(90deg,#3b4cc0,#dddcdc,#b40426);margin:10px 0 6px}.legend-ticks{display:flex;justify-content:space-between;font:500 13px var(--mono)}.legend-description{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}.legend-description p{margin:0}.report-sheet .heat-viz{max-height:650px}
+ @media(max-width:760px){.report-main>.wrap,.nav-inner{width:calc(100% - 32px)}.report-sheet{padding:16px;grid-template-columns:minmax(0,1fr)}.pad-col .pad-val,.pad-col:last-child .pad-val{font-size:36px}.legend-description{grid-template-columns:1fr}.report-sheet .pad-label{font-size:12px}.v-v.v-soft{font-size:16px}}
+</style>
+<style>
+ #candidateRegionalRows .lt-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 0}
+ #candidateRegionalRows .lt-row span:first-child{font:500 16px/1.5 var(--sans);letter-spacing:0;color:var(--ink)}
+ #candidateRegionalRows .lt-row span:last-child{letter-spacing:0}
+ @media(max-width:520px){#candidateRegionalRows .lt-row{grid-template-columns:1fr;gap:4px}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="NeuroMetric — back to overview">
+      <img class="brand-mark" src="assets/logo-mark.png" alt="" width="56" height="56">
+      <span class="brand-text">NeuroMetric</span>
+    </a>
+    <a class="report-back" href="index.html">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H4M6.5 4.5L3 8l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to overview
+    </a>
+  </div>
+</header>
+
+<main id="main" class="sec report-page report-main">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Assessment dashboard</p>
+      <h2 class="statement">Brain age assessment.</h2>
+      <p class="sec-lede">Review the age estimate and explore the MRI explanation. Research prototype — not a diagnostic report.</p>
+      <p class="lt-note">Patient: <a href="report.html?case=ixi170">IXI170</a> · <a href="report.html?case=ixi361">IXI361</a> · <a href="report.html?case=ixi566">IXI566</a> · <a href="report.html?case=dlbs3898">DLBS sub-3898</a> · <a href="report.html?case=oasis7">OAS2_0007 · Longitudinal pending</a></p>
+    </div>
+
+    <figure class="report report-sheet" aria-label="Complete sample assessment dashboard">
+      <figcaption class="report-head">
+        <span id="reportKind">Illustrative report</span>
+        <span id="dHead2">Illustration · NC-2381-019 · T1 · MNI 1&nbsp;mm</span>
+      </figcaption>
+
+      <div class="pat-row">
+        <span class="pat-k">Patient</span>
+        <span class="pat-v" id="dAge">Age: 57</span>
+      </div>
+
+      <div class="pad-wrap">
+        <div class="pad-col">
+          <span class="pad-label">Predicted brain age</span>
+          <span class="pad-val" id="dPred">66.4<span class="pad-unit">yr</span></span>
+        </div>
+        <div class="pad-col">
+          <span class="pad-label">Brain age gap (PAD)</span>
+          <span class="pad-val" id="dPad">+9.4<span class="pad-unit">yr</span></span>
+          <span class="pad-ci" id="dCi">Individual uncertainty not calibrated</span>
+        </div>
+        <div class="pad-col">
+          <span class="pad-label">Chronological age</span>
+          <span class="pad-val" id="dChronological">57<span class="pad-unit">yr</span></span>
+          <span class="ban-sub">Age at scan</span>
+        </div>
+      </div>
+
+      <details class="dsec regional-details" open>
+        <summary>Regional analysis &amp; reference data</summary>
+        <p class="lt-note">Healthy-control percentile: <span id="dPct">—</span> · Not yet validated against controls.</p>
+        <div class="pct-track" hidden><i class="pct-dot" id="dPctDot"></i></div>
+        <span class="dsec-k" id="regionalTitle">Regional analysis · illustrative gaps</span>
+        <p class="lt-note" id="regionalMethod" hidden>Regional volumes require anatomical segmentation and registration review. Volume differences cannot be converted into years without a validated age-reference model.</p>
+        <figure id="regionalVisual" hidden style="margin:20px 0">
+          <a href="assets/oasis30-regional-segmentation.png" target="_blank" rel="noopener" aria-label="Open full-size regional MRI segmentation">
+            <img src="assets/oasis30-regional-segmentation.png" alt="OAS1_0030 MRI with segmented hippocampus and cortical gray-matter groups in fifteen slices" loading="lazy" style="display:block;width:100%;height:auto;border-radius:12px">
+          </a>
+          <figcaption class="lt-note">OAS1_0030 · MRI segmentation. Yellow: hippocampus; orange: temporal; green: frontal; blue: parietal; purple: occipital. Click to enlarge. These colors identify anatomy, not disease or regional age.</figcaption>
+        </figure>
+        <div class="bars" id="dBars">
+          <div class="bars-cols" aria-hidden="true"><span>Region</span><span>← negative · positive →</span><span>Δ y</span></div>
+          <div class="bar"><span class="bar-label">Hippocampus</span><span class="bar-track"><i class="tick"></i><i class="pos" style="--w:48.8%"></i></span><span class="bar-val">+13.2<span class="bar-unit">y</span></span></div>
+          <div class="bar"><span class="bar-label">Temporal lobe</span><span class="bar-track"><i class="tick"></i><i class="pos" style="--w:33.7%"></i></span><span class="bar-val">+9.1<span class="bar-unit">y</span></span></div>
+          <div class="bar"><span class="bar-label">Frontal lobe</span><span class="bar-track"><i class="tick"></i><i class="pos" style="--w:17.4%"></i></span><span class="bar-val">+4.7<span class="bar-unit">y</span></span></div>
+          <div class="bar"><span class="bar-label">Parietal lobe</span><span class="bar-track"><i class="tick"></i><i class="pos" style="--w:8.5%"></i></span><span class="bar-val">+2.3<span class="bar-unit">y</span></span></div>
+        </div>
+        <div id="candidateRegionalPanel" hidden>
+          <h3>Experimental regional measurements</h3>
+          <p class="lt-note">Orientation review pending · Not approved clinical measurements. Bilateral totals are shown because left/right orientation is unresolved.</p>
+          <div id="candidateRegionalRows"></div>
+          <p class="lt-note" id="candidateRegionalNote">Measured volumes, not regional ages or healthy-control percentiles. Temporal, frontal and parietal lobes still require cortical parcellation.</p>
+        </div>
+      </details>
+
+      <div class="duo">
+        <div class="dsec viewer-panel">
+          <span class="dsec-k" id="heatTitle">AI attention map · schematic preview</span>
+          <div class="mri-viewer" id="mriViewer" tabindex="0" role="region" aria-label="MRI viewer. Use left and right arrow keys to switch views.">
+          <div class="viewer-toolbar" id="viewerControls" hidden>
+            <span id="viewLabel" aria-live="polite">Axial · 1 / 3</span>
+            <div class="viewer-buttons"><button id="viewPrev" type="button" aria-label="Previous MRI view">←</button><button id="viewNext" type="button" aria-label="Next MRI view">→</button></div>
+          </div>
+          <img class="heat-viz" id="realHeat" src="assets/oasis30-verified-gradcam-axial.png" alt="OAS1_0030 axial MRI with signed Grad-CAM; not a disease map" style="display:none" hidden>
+          <p id="viewError" hidden>Image could not load. Try another view or reload the page.</p>
+          <svg class="heat-viz" id="schematicHeat" viewBox="0 0 340 214" role="img" aria-label="Schematic attention map over an axial brain view (illustrative)">
+            <defs>
+              <radialGradient id="hg" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#0A66C2" stop-opacity=".8"/>
+                <stop offset="40%" stop-color="#1E82C4" stop-opacity=".42"/>
+                <stop offset="72%" stop-color="#2FA8C9" stop-opacity=".16"/>
+                <stop offset="100%" stop-color="#2FA8C9" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="hleg" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#2FA8C9" stop-opacity="0"/>
+                <stop offset="55%" stop-color="#2291B4" stop-opacity=".55"/>
+                <stop offset="100%" stop-color="#0A66C2" stop-opacity=".9"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="170" cy="96" rx="134" ry="82" fill="none" stroke="#C9D3DF" stroke-width="1.3"/>
+            <ellipse cx="170" cy="96" rx="118" ry="70" fill="#E7ECF2" stroke="#9AA7B4" stroke-width="1.5"/>
+            <path d="M170 28 C162 60 162 132 170 164" fill="none" stroke="#C4CFDB" stroke-width="1.3"/>
+            <path d="M80 62 C128 74 216 74 260 58" fill="none" stroke="#C4CFDB" stroke-width="1.1"/>
+            <path d="M84 130 C134 118 212 118 256 126" fill="none" stroke="#C4CFDB" stroke-width="1.1"/>
+            <circle class="hspot" id="hb0" fill="url(#hg)"/>
+            <circle class="hspot" id="hb1" fill="url(#hg)"/>
+            <circle class="hspot" id="hb2" fill="url(#hg)"/>
+            <circle id="hPeak" fill="none" stroke="#084E8F" stroke-width="1.2" stroke-dasharray="4 4"/>
+            <circle id="hCore" fill="#084E8F"/>
+            <text x="24" y="100" style="font:600 9px var(--mono); letter-spacing:.08em" fill="#5F6C80" text-anchor="middle">R</text>
+            <text x="316" y="100" style="font:600 9px var(--mono); letter-spacing:.08em" fill="#5F6C80" text-anchor="middle">L</text>
+            <text x="150" y="205" style="font:600 8.5px var(--mono); letter-spacing:.12em" fill="#5F6C80" text-anchor="end">LOW</text>
+            <rect x="156" y="199" width="96" height="6" rx="3" fill="url(#hleg)"/>
+            <text x="260" y="205" style="font:600 8.5px var(--mono); letter-spacing:.12em" fill="#5F6C80">HIGH</text>
+          </svg>
+          </div>
+          <p class="viewer-hint" id="viewerHint" hidden>← → Switch views · Blue: negative / Red: positive attribution</p>
+          <div class="attribution-legend" id="attributionLegend" hidden>
+            <strong>How to read the heatmap</strong>
+            <div class="legend-gradient" role="img" aria-label="Normalized signed attribution scale: blue minus one, neutral zero, red plus one"></div>
+            <div class="legend-ticks"><span>−1 · Blue</span><span>0 · Neutral</span><span>+1 · Red</span></div>
+            <div class="legend-description"><p><strong>Blue — negative attribution</strong><br>Negative contribution to the model's age output.</p><p><strong>Red — positive attribution</strong><br>Positive contribution to the model's age output.</p></div>
+            <p>Stronger color means larger normalized attribution, not a number of years. This coarse explanation is not a disease map; blue does not mean healthy and red does not mean Alzheimer disease.</p>
+          </div>
+          <p class="heat-cap" id="dHeatCap">Schematic hotspot — not generated by the model</p>
+        </div>
+        <div class="dsec" id="longitudinalPanel">
+          <span class="dsec-k">Longitudinal · brain age gap</span>
+          <p class="lt-note" id="trajectorySummary"></p>
+          <svg id="trajectoryChart" viewBox="0 0 440 200" role="img" aria-label="Brain age gap across available visits" style="display:block;width:100%;height:auto"></svg>
+          <div class="lt" id="dTrend">
+            <div class="lt-row"><span>2024</span><span>+5.3</span></div>
+            <div class="lt-row"><span>2025</span><span>+7.1</span></div>
+            <div class="lt-row now"><span>2026</span><span>+9.4</span></div>
+          </div>
+          <p class="lt-note" id="longitudinalNote">Invented visits for interface demonstration. Longitudinal performance and reference trajectories are not validated.</p>
+          <p class="lt-note"><a href="longitudinal.html">Separate patient example: OAS2_0001 follow-up →</a></p>
+          <section id="realFollowUp" hidden style="margin-top:24px;padding-top:20px;border-top:1px solid var(--line)">
+            <h3 style="font-size:18px;margin:0 0 8px">Longitudinal · OAS2_0001</h3>
+            <p class="lt-note">2 MRI visits · 457 days apart</p>
+            <p id="followUpDirection" style="font-size:20px;font-weight:600;margin:10px 0"></p>
+            <svg id="followUpChart" viewBox="0 0 440 200" role="img" aria-label="OAS2_0001 brain-age gaps at baseline and day 457" style="display:block;width:100%;height:auto"></svg>
+            <div id="followUpRows"></div>
+            <p class="lt-note" id="followUpSummary"></p>
+            <p class="lt-note">Research estimate; age is underestimated in this case. Not a diagnosis.</p>
+          </section>
+        </div>
+      </div>
+
+      <div class="dsec interpretation-panel" id="interpretationPanel">
+        <div class="v-item">
+          <span class="v-k">Status</span>
+          <span class="v-v" id="dStatus">Illustrative positive brain-age gap</span>
+        </div>
+        <div class="v-item">
+          <span class="v-k">Research interpretation</span>
+          <span class="v-v v-soft" id="dInterp">A positive gap alone does not establish disease. This fictional case cannot support clinical decisions.</span>
+        </div>
+      </div>
+
+    </figure>
+  </div>
+</main>
+
+<script src="assets/oasis30-longitudinal.js"></script>
+<script src="assets/oasis30-regional.js"></script>
+<script src="assets/oasis30-regional-candidate.js"></script>
+<script src="assets/oasis2-longitudinal-reference.js"></script>
+<script src="assets/exact-hit-cases.js"></script>
+<script src="assets/oasis7-case.js"></script>
+<script src="assets/oasis7-longitudinal.js"></script>
+<script src="assets/selected-regional-cases.js"></script>
+<script src="assets/selected-regional-review.js"></script>
+<script>
+/* Statik demo veri — sitede gerçek analiz çalışmaz */
+(function () {
+  var CASES = {};
+
+  var exactCases = window.NEUROMETRIC_EXACT_CASES || {};
+  Object.keys(exactCases).forEach(function(name) { CASES[name] = exactCases[name]; });
+  if (window.NEUROMETRIC_OASIS7_CASE) CASES.oasis7 = window.NEUROMETRIC_OASIS7_CASE;
+  var key = new URLSearchParams(window.location.search).get("case") || "ixi361";
+  var c = CASES[key];
+  if (!c) c = CASES.ixi361;
+  if (!c) return;
+  var realTrajectory = window.NEUROMETRIC_LONGITUDINAL;
+  if (c.patientId === "OAS2_0007" && window.NEUROMETRIC_OASIS7_LONGITUDINAL) {
+    realTrajectory = window.NEUROMETRIC_OASIS7_LONGITUDINAL;
+    c.status = "Two real MRI visits · technical follow-up QC " + (realTrajectory.comparable ? "completed" : "pending");
+    c.interp = "Baseline actual age 71; prediction 70.02. Follow-up actual age 73, 518 days later; prediction " + Number(realTrajectory.visits[1].prediction).toFixed(2) + ". Selected research example; change rates require matching preprocessing and technical QC. Not a diagnosis.";
+  }
+  if (c.patientId === "OAS2_0001" && window.NEUROMETRIC_OASIS2_REFERENCE) {
+    realTrajectory = window.NEUROMETRIC_OASIS2_REFERENCE.ai_longitudinal;
+  }
+  if (c.real && realTrajectory && realTrajectory.patient_id === c.patientId) {
+    c.trend = realTrajectory.visits.map(function (visit) {
+      var gap = Number(visit.brain_age_gap);
+      return [visit.scan_date || (visit.mr_delay_days != null ? "Day " + visit.mr_delay_days : "Baseline only"), (gap >= 0 ? "+" : "−") + Math.abs(gap).toFixed(1)];
+    });
+  }
+
+  var pad = document.getElementById("dPad");
+  var bars = document.getElementById("dBars");
+  if (!pad || !bars) return;
+
+  function setTxt(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+  function caseTitle(id) { var t = id.split(" · ")[0]; t = t.replace("IXI:", "").replace("DLBS:", "DLBS "); return t; }
+
+  var predictedAge = document.getElementById("dPred");
+  if (predictedAge) predictedAge.innerHTML = c.pred + '<span class="pad-unit">yr</span>';
+  pad.innerHTML = c.gap + '<span class="pad-unit">yr</span>';
+  setTxt("dCi", c.ci);
+  var pct = document.getElementById("dPct");
+  if (pct) pct.textContent = c.pctTxt;
+  var dot = document.getElementById("dPctDot");
+  if (dot) dot.style.setProperty("--x", c.pct + "%");
+  setTxt("dAge", c.age);
+  document.getElementById("dChronological").innerHTML = c.age.replace("Age: ", "") + '<span class="pad-unit">yr</span>';
+  document.getElementById("interpretationPanel").appendChild(document.getElementById("longitudinalPanel"));
+  setTxt("dHead2", "Illustration · " + c.id);
+  setTxt("dStatus", c.status);
+  setTxt("dInterp", c.interp);
+  setTxt("dHeatCap", c.cap);
+  if (c.real && c.patientId === "OAS2_0001") {
+    setTxt("reportKind", "Research report");
+    setTxt("dHead2", caseTitle(c.id));
+    document.getElementById("mriViewer").hidden = true;
+    setTxt("heatTitle", "MRI explanation unavailable for this patient");
+    setTxt("regionalTitle", "Regional volumes · not measured for this patient");
+  }
+  if (c.real && c.heatPrefix) {
+    setTxt("reportKind", "Research report");
+    setTxt("regionalTitle", "Anatomical regions · measurement status");
+    document.getElementById("regionalMethod").hidden = false;
+    setTxt("dHead2", caseTitle(c.id));
+    setTxt("heatTitle", "Model explanation · signed Grad-CAM");
+    document.getElementById("realHeat").hidden = false;
+    document.getElementById("realHeat").style.display = "block";
+    document.getElementById("schematicHeat").style.display = "none";
+    document.getElementById("viewerControls").hidden = false;
+    document.getElementById("viewerHint").hidden = false;
+    document.getElementById("attributionLegend").hidden = false;
+    var image = document.getElementById("realHeat");
+    var viewer = document.getElementById("mriViewer");
+    var planes = ["Axial", "Coronal", "Sagittal"], viewIndex = 0;
+    function showView(index) {
+      viewIndex = (index + planes.length) % planes.length;
+      setTxt("viewLabel", planes[viewIndex] + " · " + (viewIndex + 1) + " / 3");
+      document.getElementById("viewError").hidden = true;
+      image.alt = c.patientId + " " + planes[viewIndex].toLowerCase() + " MRI with signed Grad-CAM; not a disease map";
+      image.src = "assets/" + c.heatPrefix + "-" + planes[viewIndex].toLowerCase() + ".png";
+    }
+    showView(0);
+    if (viewer.addEventListener) {
+      document.getElementById("viewPrev").addEventListener("click", function () { showView(viewIndex - 1); });
+      document.getElementById("viewNext").addEventListener("click", function () { showView(viewIndex + 1); });
+      viewer.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+          event.preventDefault(); showView(viewIndex + (event.key === "ArrowRight" ? 1 : -1));
+        }
+      });
+      image.addEventListener("error", function () { document.getElementById("viewError").hidden = false; });
+      image.addEventListener("load", function () { document.getElementById("viewError").hidden = true; });
+    }
+    setTxt("longitudinalNote", "One real scan; no longitudinal slope can be estimated.");
+    var provenance = document.querySelectorAll(".prov");
+    if (provenance[0]) provenance[0].textContent = "Real SFCN contrast-cont4 prediction and Grad-CAM · regional age unavailable · clinical validity unconfirmed";
+  }
+
+  for (var i = 0; i < 3; i++) {
+    var hb = document.getElementById("hb" + i);
+    if (!hb) continue;
+    if (c.spots[i]) {
+      hb.setAttribute("cx", c.spots[i][0]); hb.setAttribute("cy", c.spots[i][1]);
+      hb.setAttribute("r", c.spots[i][2]); hb.setAttribute("opacity", c.spots[i][3]);
+    } else { hb.setAttribute("opacity", 0); }
+  }
+  var ring = document.getElementById("hPeak"), core = document.getElementById("hCore");
+  if (ring && core) {
+    if (c.ring) {
+      ring.setAttribute("cx", c.ring[0]); ring.setAttribute("cy", c.ring[1]); ring.setAttribute("r", c.ring[2]); ring.setAttribute("opacity", 1);
+      core.setAttribute("cx", c.ring[0]); core.setAttribute("cy", c.ring[1]); core.setAttribute("opacity", 1);
+    } else { ring.setAttribute("opacity", 0); core.setAttribute("opacity", 0); }
+  }
+
+  var cols = bars.querySelector(".bars-cols");
+  bars.textContent = "";
+  if (cols) bars.appendChild(cols);
+  c.regions.forEach(function (row) {
+    var d = document.createElement("div");
+    d.className = "bar";
+    d.innerHTML =
+      '<span class="bar-label">' + row[0] + "</span>" +
+      '<span class="bar-track"><i class="tick"></i><i class="' + row[3] + '" style="--w:' + row[2] + '%"></i></span>' +
+      '<span class="bar-val">' + row[1] + '<span class="bar-unit">y</span></span>';
+    bars.appendChild(d);
+  });
+  if (c.real && c.patientId !== "OAS1_0030") {
+    bars.textContent = "";
+    setTxt("regionalTitle", "Regional volumes · not measured for this patient");
+    var pendingVolumes = document.createElement("p");
+    pendingVolumes.textContent = "Regional segmentation has not been computed for " + c.patientId + ". No other patient's measurements are shown.";
+    bars.appendChild(pendingVolumes);
+  }
+  if (c.real && c.patientId === "OAS1_0030") {
+    var unavailable = document.createElement("p");
+    unavailable.textContent = "Region-specific age predictions are not available for this case. The heatmap is not a regional-age estimate.";
+    bars.appendChild(unavailable);
+    ["Hippocampus", "Temporal lobe", "Frontal lobe", "Parietal lobe"].forEach(function (name) {
+      var item = document.createElement("div");
+      item.className = "lt-row";
+      item.innerHTML = "<span>" + name + "</span><span>Segmentation needed</span>";
+      bars.appendChild(item);
+    });
+    var regional = window.NEUROMETRIC_REGIONAL;
+    var candidate = window.NEUROMETRIC_REGIONAL_CANDIDATE;
+    if (candidate && candidate.subject_id === "OAS1_0030" && candidate.approved === false && candidate.status === "experimental_geometry_review_pending") {
+      bars.textContent = "";
+      var approvalNote = document.createElement("p");
+      approvalNote.textContent = "Approved regional measurements are not available. The experimental segmentation results below still require orientation and full segmentation review.";
+      bars.appendChild(approvalNote);
+      setTxt("regionalTitle", "Regional volumes · review pending");
+      setTxt("regionalMethod", "Model-derived anatomical segmentation is available on experimental geometry. Volumes cannot be converted into years without a validated age-reference model.");
+      document.getElementById("candidateRegionalPanel").hidden = false;
+      var candidateRows = document.getElementById("candidateRegionalRows");
+      candidateRows.textContent = "";
+      candidate.regions.forEach(function (row) {
+        var item = document.createElement("div"), label = document.createElement("span"), value = document.createElement("span");
+        item.className = "lt-row"; label.textContent = row.region;
+        value.textContent = row.status === "measured" ? Number(row.volume_ml).toFixed(2) + " mL · candidate" : "Unavailable";
+        item.appendChild(label); item.appendChild(value); candidateRows.appendChild(item);
+      });
+      if (candidate.cortical_parcellation_available) {
+        setTxt("candidateRegionalNote", "FastSurfer DKT gray-matter parcel groups; white matter, cingulate and insula excluded. Experimental volumes, not regional ages, normative percentiles or approved clinical measurements.");
+      }
+    }
+    if (regional && regional.subject_id === "OAS1_0030" && regional.visual_qc === "approved" && regional.regions.length) {
+      document.getElementById("regionalVisual").hidden = false;
+      document.getElementById("candidateRegionalPanel").hidden = true;
+      bars.textContent = "";
+      setTxt("regionalTitle", "Anatomical volumes · mL");
+      setTxt("regionalMethod", "FastSurfer DKT bilateral gray-matter parcel groups on a conformed 1 mm grid · technically reviewed, not clinically validated. White matter, cingulate and insula are excluded. These are volumes, not regional ages or healthy-control percentiles.");
+      regional.regions.forEach(function (row) {
+        var item = document.createElement("div");
+        item.className = "lt-row";
+        var label = document.createElement("span"), value = document.createElement("span");
+        label.textContent = row.region;
+        value.textContent = row.status === "measured" ? Number(row.volume_ml).toFixed(2) + " mL" : "Label missing";
+        item.appendChild(label); item.appendChild(value); bars.appendChild(item);
+      });
+    }
+  }
+
+  function renderSelectedRegions(data) {
+    var result = data && data[c.patientId];
+    if (!result || result.patient_id !== c.patientId) return;
+    var review = window.NEUROMETRIC_REGIONAL_REVIEW && window.NEUROMETRIC_REGIONAL_REVIEW[c.patientId];
+    if (review && review.segmentation_sha256 === result.segmentation_sha256) {
+      result = Object.assign({}, result, {state:"technically_reviewed"});
+    }
+    bars.textContent = "";
+    setTxt("regionalTitle", "Regional analysis · anatomical volumes");
+    document.getElementById("regionalMethod").hidden = false;
+    if (result.state !== "visual_review_pending" && result.state !== "technically_reviewed") {
+      var pending = document.createElement("p");
+      pending.textContent = c.patientId + (result.state === "segmenting" ? " · regional MRI segmentation running…" : result.state === "failed" ? " · segmentation failed; measurements withheld." : " · regional MRI segmentation queued.");
+      bars.appendChild(pending);
+      setTxt("regionalMethod", "Volumes will appear after this patient's own MRI segmentation completes.");
+      return;
+    }
+    setTxt("regionalMethod", "Bilateral gray-matter volumes · " + (result.state === "visual_review_pending" ? "visual QC pending" : "technically reviewed") + ". Not regional ages or diagnosis; white matter, cingulate and insula excluded.");
+    result.regions.forEach(function(row) {
+      var item=document.createElement("div"), label=document.createElement("span"), value=document.createElement("span");
+      item.className="lt-row";label.textContent=row.region;value.textContent=Number(row.volume_ml).toFixed(2)+" mL";
+      item.appendChild(label);item.appendChild(value);bars.appendChild(item);
+    });
+    if (result.image && /^assets\/(ixi\d+|dlbs\d+)-regional\.png$/.test(result.image)) {
+      var figure=document.getElementById("regionalVisual");figure.hidden=false;
+      figure.querySelector("img").src=result.image;
+      figure.querySelector("img").alt=c.patientId + " · actual anatomical MRI segmentation";
+      figure.querySelector("a").href=result.image;
+      figure.querySelector("figcaption").textContent=c.patientId + " · yellow: hippocampus; orange: temporal; green: frontal; blue: parietal; purple: occipital. Anatomical labels, not disease risk. Click to enlarge.";
+    }
+  }
+  renderSelectedRegions(window.NEUROMETRIC_SELECTED_REGIONS);
+  if (typeof window.fetch === "function" && typeof window.setInterval === "function") {
+    window.setInterval(function() {
+      window.fetch("assets/selected-regional-cases.js", {cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("Regional results unavailable");return r.text();}).then(function(text){
+        var prefix="window.NEUROMETRIC_SELECTED_REGIONS = ";
+        if(text.indexOf(prefix)!==0)throw new Error("Invalid regional export");
+        renderSelectedRegions(JSON.parse(text.slice(prefix.length).replace(/;\s*$/, "")));
+      }).catch(function(){});
+    }, 15000);
+  }
+
+  var trend = document.getElementById("dTrend");
+  if (trend) {
+    trend.textContent = "";
+    c.trend.forEach(function (row, k) {
+      var d = document.createElement("div");
+      d.className = "lt-row" + (k === c.trend.length - 1 ? " now" : "");
+      d.innerHTML = "<span>" + row[0] + "</span><span>" + row[1] + "</span>";
+      trend.appendChild(d);
+    });
+  }
+  var chart = document.getElementById("trajectoryChart");
+  if (chart) {
+    var values = c.trend.map(function (row) { return Number(row[1].replace("−", "-")); });
+    var limit = Math.max(2, Math.ceil(Math.max.apply(null, values.map(Math.abs))));
+    var points = values.map(function (v, i) { return [values.length === 1 ? 220 : 52 + i * 340 / (values.length - 1), 86 - v / limit * 60]; });
+    var svg = '<line x1="45" y1="86" x2="402" y2="86" stroke="#a8b5c7" stroke-dasharray="4 4"/><text x="10" y="90" fill="#5f6c80" font-size="13">0 yr</text>';
+    if (points.length > 1) svg += '<polyline points="' + points.map(function (p) { return p.join(","); }).join(" ") + '" fill="none" stroke="#0a66c2" stroke-width="3"/>';
+    points.forEach(function (p, i) {
+      svg += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="5" fill="#0a66c2"/><text x="' + p[0] + '" y="' + (p[1] - 13) + '" text-anchor="middle" fill="#122038" font-size="15">' + c.trend[i][1] + ' yr</text><text x="' + p[0] + '" y="178" text-anchor="middle" fill="#5f6c80" font-size="13">' + c.trend[i][0] + '</text>';
+    });
+    chart.innerHTML = svg;
+    var summary = c.real ? values.length + " scan" + (values.length === 1 ? " · follow-up needed to assess change" : "s · descriptive follow-up") : "Illustrative trajectory · invented visits, not model results";
+    if (c.real && realTrajectory && realTrajectory.patient_id === c.patientId && realTrajectory.comparable) {
+      summary += " · Gap change: " + Number(realTrajectory.gap_change_years).toFixed(1) + " yr over " + Number(realTrajectory.elapsed_years).toFixed(1) + " yr";
+      var rate = Number(realTrajectory.gap_change_per_year);
+      summary = (rate > 0 ? "Brain-age gap increasing ↗" : rate < 0 ? "Brain-age gap decreasing ↘" : "Brain-age gap unchanged →") + " · Slope: " + (rate > 0 ? "+" : "") + rate.toFixed(2) + " yr/year · " + Math.round(realTrajectory.elapsed_years * 365.25) + " days";
+      setTxt("longitudinalNote", "Same model and preprocessing; QC approved. Model change is descriptive, not a validated biological aging rate.");
+    } else if (c.real && realTrajectory && values.length > 1) {
+      setTxt("longitudinalNote", "Change rate withheld: " + realTrajectory.withheld_reasons.join(", ") + ".");
+    }
+    setTxt("trajectorySummary", summary);
+    chart.setAttribute("aria-label", c.real ? "Observed brain age gap across " + values.length + " scan(s); no diagnostic inference." : "Illustrative brain age gap trajectory with " + values.length + " invented visits");
+  }
+  var followUp = window.NEUROMETRIC_OASIS2_REFERENCE;
+  document.getElementById("realFollowUp").hidden = true;
+  if (c.real && c.patientId && followUp && followUp.patient_id === c.patientId && followUp.ai_longitudinal && followUp.ai_longitudinal.patient_id === c.patientId && followUp.ai_longitudinal.comparable) {
+    document.getElementById("realFollowUp").hidden = false;
+    document.getElementById("trajectoryChart").hidden = true;
+    document.getElementById("dTrend").hidden = true;
+    document.getElementById("trajectorySummary").hidden = true;
+    document.getElementById("longitudinalNote").hidden = true;
+    var visits = followUp.ai_longitudinal.visits, rows = document.getElementById("followUpRows");
+    var lo = Math.min.apply(null, visits.map(function(v){return v.brain_age_gap;})) - 1;
+    var hi = Math.max.apply(null, visits.map(function(v){return v.brain_age_gap;})) + 1;
+    var pts = visits.map(function(v){return [65 + v.mr_delay_days / followUp.elapsed_days * 310, 140 - (v.brain_age_gap-lo)/(hi-lo)*90];});
+    var plot = '<line x1="45" y1="155" x2="400" y2="155" stroke="#a8b5c7"/><text x="45" y="24" fill="#5f6c80" font-size="13">Brain-age gap (yr)</text><polyline points="' + pts.map(function(p){return p.join(',');}).join(' ') + '" fill="none" stroke="#0a66c2" stroke-width="3"/>';
+    visits.forEach(function(v,i) {
+      var item=document.createElement("div"), label=document.createElement("span"), value=document.createElement("span");
+      item.className="lt-row";label.textContent="Day " + v.mr_delay_days + " · age " + v.age;
+      value.textContent="Predicted " + v.prediction.toFixed(1) + " yr";item.appendChild(label);item.appendChild(value);rows.appendChild(item);
+      plot += '<circle cx="'+pts[i][0]+'" cy="'+pts[i][1]+'" r="5" fill="#0a66c2"/><text x="'+pts[i][0]+'" y="'+(pts[i][1]-15)+'" text-anchor="middle" fill="#122038" font-size="16">'+v.brain_age_gap.toFixed(1)+' yr</text><text x="'+pts[i][0]+'" y="180" text-anchor="middle" fill="#5f6c80" font-size="14">Day '+v.mr_delay_days+'</text>';
+    });
+    document.getElementById("followUpChart").innerHTML=plot;
+    var slope = Number(followUp.ai_longitudinal.gap_change_per_year);
+    setTxt("followUpDirection", slope > 0 ? "Brain-age gap increasing ↗" : slope < 0 ? "Brain-age gap decreasing ↘" : "Brain-age gap unchanged →");
+    setTxt("followUpSummary", "Slope: " + (slope > 0 ? "+" : "") + slope.toFixed(2) + " yr/year · gap change: " + (followUp.ai_longitudinal.gap_change_years > 0 ? "+" : "") + followUp.ai_longitudinal.gap_change_years.toFixed(2) + " yr");
+  }
+})();
+</script>
+</body>
+</html>

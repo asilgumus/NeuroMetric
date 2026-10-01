@@ -1,0 +1,29 @@
+{
+  "DLBS:sub-3898": {
+    "segmentation_sha256": "6d0dd1213c7e3b38dc29a8fa155df987fde8213bdbd9d71532f0887f9384a0b5",
+    "evidence_sha256": "3980307fe00873f4be22ce277e7f57267935e8202bf9b1586bcc3a762ce09790",
+    "state": "technically_reviewed",
+    "scope": "gross_anatomical_alignment_only",
+    "clinical_validation": false,
+    "reviewer": "coding_assistant_visual_review",
+    "note": "Reviewed fifteen slices across three axes. Label overlays follow the visible cortical ribbon; bilateral hippocampal labels occur in plausible medial temporal positions. No gross grid mismatch or anatomical axis permutation observed. Gross technical inspection only, not clinician validation or manual segmentation accuracy assessment."
+  },
+  "IXI:IXI361": {
+    "segmentation_sha256": "0ac265319161d993482137084179b45b2ea71a47032972134fb88da9e012d3e3",
+    "evidence_sha256": "1806868fd48677e5c45c7dc73da9a51dc5ecb3a8ef66d33beeea3fa847c78394",
+    "state": "technically_reviewed",
+    "scope": "gross_anatomical_alignment_only",
+    "clinical_validation": false,
+    "reviewer": "coding_assistant_visual_review",
+    "note": "Reviewed fifteen slices across three axes. Label overlays follow the visible cortical ribbon; bilateral hippocampal labels occur in plausible medial temporal positions. No gross grid mismatch or anatomical axis permutation observed. Gross technical inspection only, not clinician validation or manual segmentation accuracy assessment."
+  },
+  "IXI:IXI170": {
+    "segmentation_sha256": "ddb65197749d59965b2c7567aa6d53c82dac20ebb95d5a00b256c57a784cd327",
+    "evidence_sha256": "f79b9fe42ce4314f40545c8a086eba2fd7447beca1975fe4225c58ec7bcc10ad",
+    "state": "technically_reviewed",
+    "scope": "gross_anatomical_alignment_only",
+    "clinical_validation": false,
+    "reviewer": "coding_assistant_visual_review",
+    "note": "Reviewed fifteen slices across three anatomical axes. Cortical labels follow visible gray matter; hippocampal overlays are in plausible medial temporal positions. No gross alignment or axis mismatch observed. Technical gross-anatomy review only, not clinician approval."
+  }
+}

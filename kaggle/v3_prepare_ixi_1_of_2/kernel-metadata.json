@@ -1,0 +1,18 @@
+{
+  "id": "asildoangm/brainage-v3-prepare-ixi-1-of-2",
+  "title": "BrainAGE V3 Prepare IXI-1-of-2",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "kbacon/ixi-t1"
+  ],
+  "competition_sources": [],
+  "model_sources": [],
+  "kernel_sources": [
+    "asildoangm/brainage-ixi-prepare"
+  ]
+}

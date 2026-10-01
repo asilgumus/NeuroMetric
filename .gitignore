@@ -1,0 +1,42 @@
+# NeuroMetric / BrainAge — depodan tutulan dosyalar
+# Büyük veri, model ağırlıkları, sanal ortamlar ve derleme çıktıları depoya girmez;
+# katalog ve prepare adımları bunları yeniden üretir.
+
+# --- Python ortamı
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# --- Veri ve model artifacts (GB'larca; yeniden üretilebilir)
+.cache/
+data/*
+!data/dkt_lobe_groups.json
+artifacts/
+*.nii
+*.nii.gz
+*.npz
+*.npy
+*.pt
+*.pth
+*.p
+*.ckpt
+
+# --- Gizli anahtarlar / kişisel Kaggle oturumu
+.kaggle/
+kaggle.json
+.env
+*.pem
+*.key
+
+# --- Site derleme çıktısı ve kişisel yedekler
+dist-demo/
+backups/
+
+# --- OS / editör
+.DS_Store
+Thumbs.db
+*.swp
+*.bak

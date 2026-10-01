@@ -1,0 +1,14 @@
+{
+  "id": "asildoangm/brainage-ixi-pilot",
+  "title": "BrainAGE IXI Pilot",
+  "code_file": "pilot.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": ["kbacon/ixi-t1"],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

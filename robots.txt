@@ -1,0 +1,5 @@
+# NeuroMetric — showcase site
+User-agent: *
+Allow: /
+# Canonical/og:url still use the placeholder https://neurometric.example/
+# — replace it with the real domain after deployment.

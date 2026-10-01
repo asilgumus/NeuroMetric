@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeuroMetric · Real longitudinal sample</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    main { max-width:1100px; margin:48px auto; padding:0 24px; font-size:18px; line-height:1.6; }
+    h1 { font-size:clamp(28px,5vw,44px); line-height:1.2; }
+    table { width:100%; border-collapse:collapse; margin:28px 0; }
+    th,td { padding:14px 10px; text-align:left; border-bottom:1px solid #b7bdc5; }
+    .scroll { overflow:auto; } .note { font-size:16px; } svg { width:100%; max-width:700px; }
+    a { text-decoration:underline; } .pill { padding:6px 12px; border:1px solid; border-radius:20px; display:inline-block; font-size:14px; }
+  </style>
+</head>
+<body>
+<main>
+  <a href="report.html?case=oasis30">← Assessment dashboard</a>
+  <h1>Real longitudinal MRI sample</h1>
+  <p>OAS2_0001 · OASIS-2 · one participant, two visits</p>
+  <span class="pill">Research demonstration · not a clinical diagnosis</span>
+  <p id="interval"></p>
+  <h2>Dataset reference measurements</h2>
+  <p>Normalized whole-brain volume (nWBV) is a supplied dataset measurement. It is not an AI brain-age prediction.</p>
+  <svg id="referenceChart" viewBox="0 0 700 230" role="img" aria-label="Dataset normalized whole-brain volume across two visits"></svg>
+  <div class="scroll"><table>
+    <thead><tr><th>Visit</th><th>Days from baseline</th><th>Actual age</th><th>nWBV</th><th>MMSE</th><th>CDR</th></tr></thead>
+    <tbody id="visits"></tbody>
+  </table></div>
+  <p id="change"></p>
+  <h2>AI longitudinal assessment</h2>
+  <div class="scroll"><table id="aiTable" hidden><thead><tr><th>Visit</th><th>Actual age</th><th>Predicted age</th><th>Brain-age gap</th></tr></thead><tbody id="aiVisits"></tbody></table></div>
+  <p id="modelStatus">MRI preprocessing and visual quality review are pending. Brain-age predictions and change rates are withheld until both visits have passed the same pipeline.</p>
+  <p class="note">Relative visit days are provided by OASIS-2; calendar dates are not invented. Scanner, registration and segmentation variability can affect measured change. Two visits do not establish a disease diagnosis or a validated biological aging rate.</p>
+  <p class="note"><a href="https://sites.wustl.edu/oasisbrains/home/oasis-2/" target="_blank" rel="noopener noreferrer">Dataset and usage terms</a> · <a href="https://doi.org/10.1162/jocn.2009.21407" target="_blank" rel="noopener noreferrer">OASIS longitudinal study</a></p>
+</main>
+<script src="assets/oasis2-longitudinal-reference.js"></script>
+<script>
+  (function () {
+    var data = window.NEUROMETRIC_OASIS2_REFERENCE;
+    if (!data) { document.getElementById('modelStatus').textContent = 'Reference data unavailable.'; return; }
+    document.getElementById('interval').textContent = 'Actual follow-up interval: ' + data.elapsed_days + ' days (' + (data.elapsed_days / 365.25).toFixed(2) + ' years).';
+    var tbody = document.getElementById('visits');
+    data.visits.forEach(function (visit) {
+      var row = document.createElement('tr');
+      [visit.scan_id, visit.mr_delay_days, visit.age, (100 * visit.normalized_whole_brain_volume).toFixed(2) + '%', visit.mmse, visit.cdr].forEach(function (value) {
+        var cell = document.createElement('td'); cell.textContent = String(value); row.appendChild(cell);
+      }); tbody.appendChild(row);
+    });
+    document.getElementById('change').textContent = 'nWBV change: ' + data.nwbv_change_percentage_points.toFixed(2) + ' percentage points. This is a dataset reference measurement, not a predicted age change.';
+    if (data.ai_longitudinal && data.ai_longitudinal.comparable) {
+      document.getElementById('aiTable').hidden = false;
+      data.ai_longitudinal.visits.forEach(function(v) {
+        var row = document.createElement('tr');
+        [v.scan_id, v.age, v.prediction.toFixed(1), v.brain_age_gap.toFixed(1)].forEach(function(value) {
+          var cell = document.createElement('td'); cell.textContent=String(value); row.appendChild(cell);
+        }); document.getElementById('aiVisits').appendChild(row);
+      });
+      document.getElementById('modelStatus').textContent = 'Same checkpoint and preprocessing; technical registration review completed. Brain-age gap changed by ' + data.ai_longitudinal.gap_change_years.toFixed(2) + ' years across ' + data.elapsed_days + ' days. The model substantially underestimates chronological age in this sample. This is an uncalibrated research result, not evidence of a younger healthy brain or a validated aging rate.';
+    }
+    var svg = document.getElementById('referenceChart'), ns = 'http://www.w3.org/2000/svg';
+    var values = data.visits.map(function(v){return 100*v.normalized_whole_brain_volume;}), lower=Math.min.apply(null,values)-1, upper=Math.max.apply(null,values)+1;
+    function add(tag, attrs, text) { var el=document.createElementNS(ns,tag); Object.keys(attrs).forEach(function(k){el.setAttribute(k,attrs[k]);}); if(text)el.textContent=text; svg.appendChild(el); }
+    var points=data.visits.map(function(v,i){return [100+v.mr_delay_days/data.elapsed_days*500,170-(values[i]-lower)/(upper-lower)*120];});
+    add('line',{x1:100,y1:180,x2:600,y2:180,stroke:'currentColor'});
+    add('polyline',{points:points.map(function(p){return p.join(',');}).join(' '),fill:'none',stroke:'#327c99','stroke-width':3});
+    points.forEach(function(p,i){ add('circle',{cx:p[0],cy:p[1],r:6,fill:'#327c99'});add('text',{x:p[0],y:p[1]-15,'text-anchor':'middle',fill:'currentColor','font-size':18},values[i].toFixed(2)+'%');add('text',{x:p[0],y:210,'text-anchor':'middle',fill:'currentColor','font-size':16},'Day '+data.visits[i].mr_delay_days); });
+  }());
+</script>
+</body>
+</html>

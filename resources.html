@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources — NeuroMetric</title>
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<meta name="description" content="NeuroMetric resources: model card, release notes and data policy for the research-preview prototype.">
+<meta name="theme-color" content="#FAFBFD">
+<!-- Replace neurometric.example with the real domain after deployment (canonical/og:url). -->
+<link rel="canonical" href="https://neurometric.example/resources.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NeuroMetric">
+<meta property="og:url" content="https://neurometric.example/resources.html">
+<meta property="og:title" content="Resources — NeuroMetric">
+<meta property="og:description" content="Model card, release notes and data policy for the research-preview prototype.">
+<meta property="og:image" content="https://neurometric.example/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NeuroMetric overview page with assessment panel and headline.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Resources — NeuroMetric">
+<meta name="twitter:description" content="Model card, release notes and data policy for the research-preview prototype.">
+<meta name="twitter:image" content="https://neurometric.example/assets/og-cover.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .report-back{
+    margin-left:auto; display:inline-flex; align-items:center; gap:8px;
+    font:600 13.5px var(--sans); color:var(--ink2); white-space:nowrap;
+    border:1px solid var(--line); border-radius:9px; padding:9px 15px; background:#fff;
+    transition:border-color .18s, color .18s, background .18s;
+  }
+  .report-back:hover{ border-color:var(--accent-line); color:var(--accent); background:var(--accent-soft); }
+  .report-back svg{ width:14px; height:14px; }
+  .res-page{ padding-top:56px; }
+  .res-block{ max-width:880px; margin:0 auto 18px; }
+  .res-kv{ display:grid; grid-template-columns:200px 1fr; gap:14px 28px; padding:13px 0; border-top:1px solid var(--line2); }
+  .res-kv:first-of-type{ margin-top:18px; border-top:1px solid var(--line); }
+  .res-kv b{ font:500 13px var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--mut); padding-top:2px; }
+  .res-kv p{ margin:0; font-size:14px; line-height:1.6; color:var(--ink2); }
+  .res-list{ margin:14px 0 0; padding:0; list-style:none; display:grid; gap:0; }
+  .res-list li{ display:grid; grid-template-columns:74px 96px 1fr; gap:18px; align-items:baseline;
+                padding:11px 0; border-top:1px solid var(--line2); font-size:13.5px; color:var(--ink2); }
+  .res-list i{ font:500 10px var(--mono); letter-spacing:.08em; color:var(--accent); font-style:normal; }
+  .res-list u{ font:500 11px var(--mono); letter-spacing:.06em; color:var(--mut); text-decoration:none; }
+  .foot-note{ max-width:880px; margin:26px auto 0; font-size:13px; line-height:1.6; color:var(--mut); }
+  .res-main{ padding-bottom:64px; }
+  @media (max-width:760px){
+    .res-kv{ grid-template-columns:1fr; gap:5px; }
+    .res-list li{ grid-template-columns:1fr auto; }
+    .res-list i{ display:none; }
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="NeuroMetric — back to overview">
+      <img class="brand-mark" src="assets/logo-mark.png" alt="" width="56" height="56">
+      <span class="brand-text">NeuroMetric</span>
+    </a>
+    <a class="report-back" href="index.html">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H4M6.5 4.5L3 8l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to overview
+    </a>
+  </div>
+</header>
+
+<main id="main" class="sec res-page res-main">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Resources</p>
+      <h2 class="statement">What we have built, and what remains to validate.</h2>
+      <p class="sec-lede">Implementation facts and validation results for the research prototype. Dashboard case values are illustrative; measured metrics below come from saved validation predictions.</p>
+    </div>
+
+    <section class="res-block">
+      <h2 class="statement" id="model-card" style="scroll-margin-top:80px">Model card</h2>
+      <div class="kv-wrap">
+        <div class="res-kv"><b>Intended use</b><p>Research-only estimation of chronological age from T1 MRI using a pretrained, fine-tuned SFCN. Brain-age gap is predicted minus chronological age; it is not ground-truth biological age.</p></div>
+        <div class="res-kv"><b>Inputs</b><p>The local pipeline uses 3D T1-weighted NIfTI (.nii / .nii.gz); the OASIS preparation tool also reads Analyze .img/.hdr pairs. SynthStrip brain extraction, FSL FAST bias correction and 12-DOF FLIRT alignment to 1 mm MNI precede a 160 × 192 × 160 SFCN input. No browser upload or DICOM service is implemented.</p></div>
+        <div class="res-kv"><b>Outputs</b><p>Whole-brain predicted age, raw age gap and registration QC. The regional dashboard is available with illustrative values; region-specific model validation and actual attention heatmaps remain pending. No validated percentile or individual confidence interval is available.</p></div>
+        <div class="res-kv"><b>Performance</b><p>Saved deeper-cont3 checkpoint: 218 validation participants, MAE 3.446 years, ±1-year coverage 19.27% (42/218), rounded-year match 12.84% (28/218). Refine-cont1 has higher ±1-year coverage, 21.56% (47/218). These are validation-selection results, not independent test or clinical accuracy. Test–retest ICC is unmeasured.</p></div>
+        <div class="res-kv"><b>Limitations</b><p>Not a diagnostic device. Alzheimer-cohort evaluation, independent test performance, individual uncertainty, regional validity and longitudinal reliability remain unconfirmed. Repeated validation tuning can inflate estimates. Pretraining overlap with OASIS is unaudited; exploratory results cannot be called independent clinical validation.</p></div>
+        <div class="res-kv"><b>Version</b><p>Fine-tuned 3D SFCN; deeper-cont3 is the documented completed checkpoint for these metrics. ResNet was also explored; no four-model ensemble or clinical calibration is claimed. Subsequent runs must be compared before selecting a final model.</p></div>
+      </div>
+    </section>
+
+    <section class="res-block">
+      <h2 class="statement" id="releases" style="scroll-margin-top:80px">Release notes</h2>
+      <ul class="res-list">
+        <li><u>Model</u><i>completed</i><span>Pretrained SFCN fine-tuning on 923 usable IXI/SALD/NIMH training participants; fixed 218-person validation and saved checkpoint hashes.</span></li>
+        <li><u>OASIS-1</u><i>in progress</i><span>Authorized download and automated preprocessing of baseline T1 scans for up to 416 people. Research cohort includes 100 CDR-defined dementia cases. This does not establish biomarker-confirmed Alzheimer diagnosis for every case.</span></li>
+        <li><u>Dashboard</u><i>demo</i><span>Whole-brain and regional presentation, schematic heatmap and illustrative visit history. Model-derived heatmaps and longitudinal validation remain future work.</span></li>
+      </ul>
+    </section>
+
+    <section class="res-block">
+      <h2 class="statement" id="data" style="scroll-margin-top:80px">Data policy</h2>
+      <div class="kv-wrap">
+        <div class="res-kv"><b>Accepted input</b><p>This static site accepts no MRI uploads and performs no inference. Local research tools should receive only appropriately de-identified data; age is required to compute an age gap.</p></div>
+        <div class="res-kv"><b>Anonymization</b><p>Training and evaluation rely on public-access/de-identified research data under their own terms. MRI conversion is not a certified anonymization or defacing service; do not assume processing removes every identifying feature.</p></div>
+        <div class="res-kv"><b>Retention</b><p>Downloaded scans, prepared arrays and QC artifacts are retained locally for this research workflow. There is no implemented automatic deletion policy or hosted patient-data service.</p></div>
+        <div class="res-kv"><b>Purpose</b><p>IXI, SALD and NIMH supply training/validation data. IXI test and DLBS are held out from tuning; OASIS-1 is an exploratory dementia-cohort evaluation source, not model training data. OASIS use requires its data-use agreement, no reidentification and required acknowledgements.</p></div>
+      </div>
+    </section>
+
+    <p class="foot-note">NeuroMetric is a research-grade decision-support prototype; it is not intended for clinical diagnosis, determination or treatment decisions. Questions: <a class="fmail" style="border-bottom:none;display:inline;padding:0" href="mailto:info@neurometric.health">info@neurometric.health</a></p>
+  </div>
+</main>
+</body>
+</html>
