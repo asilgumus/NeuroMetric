@@ -109,9 +109,7 @@ Citations, versions and SHA-256 provenance: `DATA_SOURCES.md` and `v3_data.py`.
   not sum to the whole-brain gap.
 - Dashboard case cards are selected research examples and not an unbiased
   performance summary; four cases contain invented values, while IXI170,
-  IXI361, IXI566, DLBS sub-3898 and the OAS2_0007 baseline carry real model
-  predictions; OAS2_0007's follow-up gap (-1.8 years) is a written placeholder
-  pending technical QC.
+  IXI361, IXI566, DLBS sub-3898 and OAS2_0007 carry real model predictions.
 - The site neither uploads nor analyzes data; every figure is precomputed.
 - `technical_review` and QC flags are technical-control information, not
   clinical validation.
