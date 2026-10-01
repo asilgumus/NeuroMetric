@@ -1,0 +1,20 @@
+BrainAge / NeuroMetric — MRI-based brain age prediction (research prototype)
+
+Copyright (c) 2026 Asil Doğan Gümüş. All rights reserved.
+
+This repository — its source code, model pipeline, website and media assets —
+is proprietary research software. No license is granted to use, copy, modify,
+merge, publish, distribute, sublicense or sell it without the copyright
+holder's prior written permission. Viewing this repository on GitHub and
+running its model pipeline locally for personal research purposes is allowed;
+any other use requires permission.
+
+Not medical or diagnostic software. Model outputs must not be used for
+clinical diagnosis or treatment decisions.
+
+Third-party components retain their own licenses: the released Westman CNN1
+model code and weights carry their upstream license, and dataset terms are
+listed in DATA_SOURCES.md. Those licenses and terms are not covered by this
+copyright notice.
+
+Contact: Asil Doğan Gümüş (repository owner).

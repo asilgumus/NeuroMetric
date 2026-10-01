@@ -35,9 +35,9 @@ device or diagnostic system.
 3. `predict` emits `chronological_age`, `predicted_brain_age`,
    `brain_age_gap`, model hash, and automatic QC status.
 
-İlk deney CNN1 üye 0 ile çalışır. V2 geliştirmesi beş pretrained üyeyi ayrı
-fine-tune eder ve yalnız validation sonuçlarıyla seçilen üyeleri eşit ağırlıkla
-ortalar.
+The first experiment runs CNN1 member 0. The V2 improvement separately
+fine-tunes the five pretrained members and averages the validation-selected
+ones with equal weights.
 
 ## Reproducibility and evaluation
 
@@ -57,9 +57,9 @@ ortalar.
 The short `kaggle/pilot` run exists only to test the complete MRI path before
 the full cohort is processed.
 
-V2 ensemble tahmini için `brainage.py predict --checkpoint` sonrasında
-`artifacts/ensemble-v2/member_*.pt` içindeki seçilmiş checkpoint'leri birlikte
-verin. Çıktı her üyenin tahminini ve ensemble ortalamasını kaydeder.
+For the V2 ensemble prediction, run `brainage.py predict --checkpoint` and
+supply the selected checkpoints in `artifacts/ensemble-v2/member_*.pt` together.
+The output records each member's prediction and the ensemble average.
 
 ## Limits
 

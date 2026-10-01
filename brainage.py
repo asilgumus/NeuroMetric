@@ -552,28 +552,30 @@ def plots_and_report(output, test, report, selection, n_train):
     fig.savefig(output / 'test_evaluation.png', dpi=160)
     plt.close(fig)
     before, after = report['test']['pretrained']['mae'], report['test']['selected']['mae']
-    content = f'''# BrainAGE IXI araştırma deneyi
+    content = f'''# BrainAGE IXI research experiment
 
-Eğitim: {n_train} katılımcı. Test: {len(test)} katılımcı.
-Hazır CNN1 üye 0 test MAE: {before:.3f} yıl (beşli ensemble kullanılmadı).
-Doğrulamada seçilen model test MAE: {after:.3f} yıl.
-Test MAE değişimi (pozitif değer iyileşme): {before-after:.3f} yıl.
-Seçilen aşama: {selection['stage']}, epoch: {selection['epoch']}.
-Fine-tune modelinin test MAE değeri: {report['test']['finetuned']['mae']:.3f} yıl.
+Training: {n_train} participants. Test: {len(test)} participants.
+Pretrained CNN1 member 0 test MAE: {before:.3f} years (five-member ensemble not used).
+Validation-selected model test MAE: {after:.3f} years.
+Test MAE change (positive = improvement): {before-after:.3f} years.
+Selected stage: {selection['stage']}, epoch: {selection['epoch']}.
+Fine-tuned model test MAE: {report['test']['finetuned']['mae']:.3f} years.
 
-Model yalnızca doğrulama kümesiyle seçildi. Test sonuçları model seçimini değiştirmedi.
-Fine-tuning doğrulamada iyileşmediyse seçilen model özgün pretrained modeldir.
-Bu sonuç IXI içindeki katılımcı ayrımına aittir; bağımsız hastane doğrulaması değildir.
-Görüntü kalite kontrolü otomatik kontroller ve örnek görsel inceleme ile sınırlıdır.
-Yaş farkı ham tahmin eksi kronolojik yaştır; yaş yanlılığı düzeltmesi uygulanmadı.
-Bölgesel yaş, sağlıklı kontrol yüzdeliği, hastalık tanısı veya klinik öneri üretilmedi.
+The model was selected using the validation set only. Test results did not
+influence model selection. If fine-tuning did not improve on validation, the
+selected model is the original pretrained model. The result belongs to a
+participant split inside IXI; it is not an independent hospital validation.
+Image quality control is limited to automatic checks and sampled visual
+inspection. The age gap is raw prediction minus chronological age; no age-bias
+correction was applied. Regional age, healthy-control percentile, disease
+diagnosis or clinical recommendation were not produced.
 
-Kaynaklar: https://brain-development.org/ixi-dataset/ (IXI, CC BY-SA 3.0)
-ve https://github.com/{REPO} (model kodu, MIT).
-Model eğitimi raporunda CNN1 için ADNI, AIBL, GENIC ve UK Biobank listelenir;
-IXI bu listede yoktur. Katılımcı düzeyinde orijinal eğitim kayıtlarına erişimimiz yoktur.
+Sources: https://brain-development.org/ixi-dataset/ (IXI, CC BY-SA 3.0)
+and https://github.com/{REPO} (model code, MIT).
+The CNN1 model training report lists ADNI, AIBL, GENIC and UK Biobank; IXI is
+not in that list. We have no access to per-participant original training records.
 '''
-    (output / 'REPORT_TR.md').write_text(content)
+    (output / 'REPORT.md').write_text(content)
 
 
 def predict(args):

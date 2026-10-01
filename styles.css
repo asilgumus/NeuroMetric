@@ -1,6 +1,6 @@
 /* ============================================================
-   NeuroMetric — v4: full-bleed, modern klinik tema
-   Gri + LinkedIn mavisi (marka) + görüntüleme siyanı (veri).
+   NeuroMetric — v4: full-bleed, modern clinical theme
+   Gray + LinkedIn blue (brand) + imaging cyan (data).
    Space Grotesk / Inter Tight / IBM Plex Mono. 12-col bento.
    ============================================================ */
 
@@ -20,7 +20,7 @@
   --accent-soft: #EDF5FE;
   --accent-line: #C3DAF2;
 
-  --data:        #2291B4;   /* görüntüleme siyanı — veri, grafik, okuma */
+  --data:        #2291B4;   /* imaging cyan — data, charts, readout */
   --data-2:      #2FA8C9;
 
   --dark:      #0A0F1A;
@@ -28,7 +28,7 @@
   --dark-line: #1C2A3C;
   --dark-mut:  #8AA2BD;
   --dark-txt:  #CBD8E6;
-  --accent-tx: #66B5EE;   /* koyu zeminde açık mavi */
+  --accent-tx: #66B5EE;   /* light blue on dark */
 
   --amber-bg:  #FEF4E5;
   --amber-bd:  #EFDCBE;
@@ -71,7 +71,7 @@ section{ scroll-margin-top:80px; }
 
 h1,h2,h3,h4{ margin:0; }
 
-/* kenardan kenara kap — neredeyse hiç max-width yok */
+/* edge to edge — nearly no max-width at all */
 .wrap{
   width:100%;
   max-width:1720px;
@@ -79,7 +79,7 @@ h1,h2,h3,h4{ margin:0; }
   padding-inline:var(--pad);
 }
 
-/* ---------- ortak parçalar ---------- */
+/* ---------- shared parts ---------- */
 .eyebrow{
   display:block;
   margin:0 0 12px;
@@ -129,7 +129,7 @@ h1,h2,h3,h4{ margin:0; }
 
 .mono-id{ font:500 11px var(--mono); letter-spacing:.08em; color:var(--mut); }
 
-/* ---------- üst bar ---------- */
+/* ---------- top bar ---------- */
 .nav{
   position:sticky; top:0; z-index:50;
   background:rgba(250,251,253,.86);
@@ -172,7 +172,7 @@ h1,h2,h3,h4{ margin:0; }
 .mobile-menu a{ padding:12px 4px; font:500 15px var(--sans); color:var(--ink2); border-bottom:1px solid var(--line2); }
 .mobile-menu .btn{ margin-top:14px; border-bottom:none; }
 
-/* ---------- HERO (tam genişlik) ---------- */
+/* ---------- HERO (full width) ---------- */
 .hero{
   position:relative;
   border-bottom:1px solid var(--line);
@@ -224,7 +224,7 @@ h1,h2,h3,h4{ margin:0; }
   color:var(--mut);
 }
 
-/* ---------- değerlendirme paneli ---------- */
+/* ---------- assessment panel ---------- */
 .panel{
   background:var(--panel);
   border:1px solid var(--line);
@@ -250,7 +250,7 @@ h1,h2,h3,h4{ margin:0; }
 }
 .panel-title{ font-family:var(--disp); font-size:21px; letter-spacing:-.02em; font-weight:600; }
 
-/* örnek vaka seçici — dashboard report.html'de açılır */
+/* case selector — opens the dashboard in report.html */
 .case-pick{ margin-top:18px; display:grid; gap:9px; }
 .case-lab{
   font:600 15px var(--mono); letter-spacing:.14em; text-transform:uppercase;
@@ -271,7 +271,7 @@ h1,h2,h3,h4{ margin:0; }
 .panel-foot{ margin-top:18px; }
 
 
-/* ---------- güven: öneriler karuseli ---------- */
+/* ---------- trust: testimonial carousel ---------- */
 .trust{ padding:92px 0 56px; border-bottom:1px solid var(--line); background:var(--band); }
 .trust-head{ text-align:center; margin-bottom:42px; }
 .trust-head .eyebrow{ margin-bottom:10px; }
@@ -323,7 +323,7 @@ h1,h2,h3,h4{ margin:0; }
 .tst-dots button{ width:9px; height:9px; padding:0; border:none; border-radius:5px; background:#C9D2DC; cursor:pointer; transition:width .25s, background .25s; }
 .tst-dots button.on{ width:26px; background:var(--accent); }
 
-/* ---------- genel bölüm ---------- */
+/* ---------- general section ---------- */
 .sec{ padding:104px 0; border-bottom:1px solid var(--line); }
 .sec-band{ background:var(--band); }
 
@@ -347,10 +347,10 @@ h1,h2,h3,h4{ margin:0; }
 .bcard h3{ font-family:var(--disp); font-size:21px; font-weight:600; letter-spacing:-.02em; margin-bottom:10px; }
 .bcard p{ margin:0; font-size:15px; line-height:1.66; color:var(--ink2); max-width:56ch; }
 .viz{ width:100%; max-width:420px; height:auto; margin-top:22px; }
-/* iki üst kartın grafiği kart alanını doldursun */
+/* the top two cards' chart should fill its card area */
 .b7 .viz,.b5 .viz{ max-width:540px; margin-inline:auto; }
 
-/* ---------- yöntem: pipeline şeridi + editoryal aşama tablosu ---------- */
+/* ---------- method: pipeline strip + editorial stage table ---------- */
 .pipe{
   margin:16px 0 0; display:flex; flex-wrap:wrap; align-items:baseline; gap:7px 13px;
   font:500 13px var(--mono); letter-spacing:.12em; text-transform:uppercase;
@@ -474,7 +474,7 @@ h1,h2,h3,h4{ margin:0; }
 .lg-chart{ width:100%; height:auto; }
 .chart-foot{ margin:12px 0 0; padding-top:12px; border-top:1px solid var(--line2); font-size:12.5px; color:var(--mut); line-height:1.5; }
 
-/* tek panel, klinik rapor hiyerarşisi: ana okuma → mini trajediler → ikincil satırlar */
+/* one panel, clinical report hierarchy: main reading → mini trajectories → secondary rows */
 .keyfig{
   align-self:stretch;
   display:grid; align-content:start;
@@ -518,7 +518,7 @@ h1,h2,h3,h4{ margin:0; }
 }
 .kfr-x{ display:block; margin-top:7px; font-size:13.5px; line-height:1.62; color:var(--mut); max-width:48ch; }
 
-/* ---------- ekip: foto kartları ---------- */
+/* ---------- team: photo cards ---------- */
 .team-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
 .tcard{
   display:grid; grid-template-columns:minmax(238px,292px) minmax(0,1fr);
@@ -546,12 +546,12 @@ h1,h2,h3,h4{ margin:0; }
 }
 .tsoc a:hover{ border-color:var(--accent-line); color:var(--accent); background:var(--accent-soft); transform:translateY(-2px); }
 .tsoc svg{ width:14.5px; height:14.5px; }
-/* fotoğraf penceresini sola pan: kişi çerçevede daha sağa gelir
-   (object-view-box desteklemeyen tarayıcıda düz cover'a düşer) */
+/* pan the photo window left so the person sits further right in the frame
+   (browsers without object-view-box fall back to plain cover) */
 .tcard:nth-of-type(1) .tphoto{ object-view-box: inset(0% 28% 0% 0%); }
 .tcard:nth-of-type(2) .tphoto{ object-view-box: inset(0% 15% 0% 0%); }
 
-/* ---------- kullanım bandı ---------- */
+/* ---------- use cases band ---------- */
 .usecases{ border-bottom:1px solid var(--line); background:var(--band); padding:76px 0 56px; }
 .usecases .sec-head{ margin-bottom:36px; }
 .use-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 clamp(28px,3vw,60px); }
@@ -567,11 +567,11 @@ h1,h2,h3,h4{ margin:0; }
 .foot{ background:var(--dark); color:#9FB1C4; padding:72px 0 32px; }
 .foot-grid{ display:grid; grid-template-columns:1.35fr .6fr .6fr 1.25fr; gap:clamp(28px,4vw,64px); }
 .fbrand .brand-text{ color:#EDF3FA; }
-/* koyu zeminde logo yutulmasın: beyaz rozet çipi */
+/* keep the logo visible on dark: white badge chip */
 .fbrand .brand-mark{
   background:#fff; border-radius:12px;
   padding:0; width:58px; height:58px; object-fit:contain;
-  /* kutu sabit; PNG'nin iç kenar boşluğunu kırparak glifi büyüt (desteklemeyen tarayıcıda mevcut görünüm) */
+  /* fixed box; crops the PNG's internal padding to enlarge the glyph (current look where unsupported) */
   object-view-box: inset(3.5% 3.5% 3.5% 3.5%);
 }
 .fdesc{ margin:18px 0 20px; font-size:14px; line-height:1.65; max-width:36ch; }
@@ -595,7 +595,7 @@ h1,h2,h3,h4{ margin:0; }
   font:400 12.5px var(--mono); color:#7C93AB; letter-spacing:.02em;
 }
 
-/* ---------- kayarken açılış (yalnız JS aktifken) ---------- */
+/* ---------- scroll reveal (JS active only) ---------- */
 .js .rv{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
 .js .rv.in{ opacity:1; transform:none; }
 
@@ -645,7 +645,7 @@ h1,h2,h3,h4{ margin:0; }
   .team-grid{ grid-template-columns:1fr; }
   .tcard{ grid-template-columns:1fr; min-height:0; }
   .tphoto{ height:320px; object-position:50% 18%; transform:none; object-view-box:none; }
-  /* Asil'in fotoğrafı geniş bantta araca sıkışmasın: yüzine zoom */
+  /* zoom to the face so the vehicle does not crowd the photo in the wide band */
   .twrap{ overflow:hidden; }
   .tasil{ transform:scale(1.5); transform-origin:24% 12%; }
   .tinfo{ padding:22px 24px 26px; }

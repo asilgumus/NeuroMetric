@@ -94,23 +94,23 @@ def main():
     fig.tight_layout()
     fig.savefig(output / 'test_evaluation.png', dpi=160)
     plt.close(fig)
-    report = f'''# BrainAGE v2 ensemble raporu
+    report = f'''# BrainAGE v2 ensemble report
 
-CNN1 üyeleri {', '.join(map(str, chosen))}, validation MAE üzerinden seçildi ve
-eşit ağırlıkla ortalandı. Test verisi ensemble seçimine katılmadı.
+CNN1 members {', '.join(map(str, chosen))} were selected by validation MAE and
+averaged with equal weights. Test data did not take part in ensemble selection.
 
-- Validation MAE: {metrics['val']['mae']:.3f} yıl
-- Test MAE: {metrics['test']['mae']:.3f} yıl
-- Test RMSE: {metrics['test']['rmse']:.3f} yıl
+- Validation MAE: {metrics['val']['mae']:.3f} years
+- Test MAE: {metrics['test']['mae']:.3f} years
+- Test RMSE: {metrics['test']['rmse']:.3f} years
 - Test R²: {metrics['test']['r2']:.3f}
-- ±5 yıl oranı: %{100*metrics['test']['within_5_years']:.1f}
-- ±10 yıl oranı: %{100*metrics['test']['within_10_years']:.1f}
-- Ortalama brain-age gap: {metrics['test']['mean_gap']:+.3f} yıl
+- ±5-year rate: {100*metrics['test']['within_5_years']:.1f}%
+- ±10-year rate: {100*metrics['test']['within_10_years']:.1f}%
+- Mean brain-age gap: {metrics['test']['mean_gap']:+.3f} years
 
-Bu, bağımsız hastane doğrulaması olmayan bir araştırma prototipidir. Bölgesel
-yaş, hastalık tanısı veya klinik öneri üretmez.
+This is a research prototype without independent hospital validation. It does
+not produce regional age, disease diagnosis or clinical recommendations.
 '''
-    (output / 'REPORT_TR.md').write_text(report)
+    (output / 'REPORT.md').write_text(report)
     print(json.dumps({'selected_members': list(chosen), 'metrics': metrics}, indent=2))
 
 

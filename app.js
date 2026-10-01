@@ -1,14 +1,14 @@
-/* NeuroMetric tanıtım sitesi — görsel etkileşim (analiz işlevi yoktur) */
+/* NeuroMetric showcase site — visual interactions only (no analysis) */
 (function () {
   "use strict";
 
-  // Reveal animasyonu yalnız JS çalışıyorsa devreye girsin
+  // Reveal animation only engages when JS runs
   document.documentElement.classList.add("js");
 
   var yearEl = document.getElementById("yil");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  // Üst bar gölgesi
+  // Top bar shadow
   var nav = document.querySelector(".nav");
   var onScroll = function () {
     if (nav) nav.classList.toggle("scrolled", window.scrollY > 4);
@@ -16,7 +16,7 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  // Mobil menü
+  // Mobile menu
   var burger = document.getElementById("burger");
   var mnav = document.getElementById("mnav");
   if (burger && mnav) {
@@ -35,7 +35,7 @@
     });
   }
 
-  // Seçim dashboard linkine taşınır — veriler static olarak report.html'de durur, gerçek analiz yok
+  // The selection syncs into the dashboard link — data lives statically in report.html; no real analysis
   var sel = document.getElementById("caseSel");
   var dashBtn = document.getElementById("dashBtn");
   if (sel && dashBtn) {
@@ -46,7 +46,7 @@
     setHref();
   }
 
-  // "Trusted" öneriler karuseli — yalnızca görsel, sonsuz döngü
+  // "Trusted" testimonial carousel — visual only, infinite loop
   var vp = document.getElementById("tstViewport");
   var track = document.getElementById("tstTrack");
   var dotsEl = document.getElementById("tstDots");
@@ -55,7 +55,7 @@
     var n = slides.length;
     var reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    // sonsuz döngü: son slaytı başa, hepsini sona klonla
+    // infinite loop: clone the last slide to the front, every slide to the end
     var firstClone = slides[n - 1].cloneNode(true);
     firstClone.setAttribute("aria-hidden", "true");
     firstClone.classList.remove("is-active");
@@ -67,7 +67,7 @@
       track.appendChild(cl);
     });
 
-    var idx = 1;              // 1..n gerçek slaytlar
+    var idx = 1;              // 1..n real slides
     var timer = null;
     var all = function () { return Array.prototype.slice.call(track.children); };
 
@@ -105,7 +105,7 @@
     };
     var goWrap = function (dir) {
       var target = idx + dir;
-      if (target > n) {             // gerçek slaytların sonuna geldik klonla ilerle
+      if (target > n) {             // past the last real slide; advance through clones
         go(target, true);
         wrapReset(target, 1);
       } else if (target < 1) {
@@ -141,7 +141,7 @@
     restart();
   }
 
-  // Kayarken açılış
+  // Scroll reveal
   var rvs = Array.prototype.slice.call(document.querySelectorAll(".rv"));
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {
