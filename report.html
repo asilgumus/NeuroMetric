@@ -313,6 +313,7 @@
   if (c.patientId === "OAS2_0007" && window.NEUROMETRIC_OASIS7_LONGITUDINAL) {
     realTrajectory = window.NEUROMETRIC_OASIS7_LONGITUDINAL;
     c.status = "Two real MRI visits · technical follow-up QC " + (realTrajectory.comparable ? "completed" : "pending");
+    c.longitudinalTag = "Longitudinal";
     c.interp = "Baseline actual age 71; prediction 70.02. Follow-up actual age 73, 518 days later; prediction " + Number(realTrajectory.visits[1].prediction).toFixed(2) + ". Selected research example; change rates require matching preprocessing and technical QC. Not a diagnosis.";
   }
   if (c.patientId === "OAS2_0001" && window.NEUROMETRIC_OASIS2_REFERENCE) {
@@ -358,7 +359,7 @@
     setTxt("reportKind", "Research report");
     setTxt("regionalTitle", "Anatomical regions · measurement status");
     document.getElementById("regionalMethod").hidden = false;
-    setTxt("dHead2", caseTitle(c.id));
+    setTxt("dHead2", caseTitle(c.id) + (c.longitudinalTag ? " · " + c.longitudinalTag : ""));
     setTxt("heatTitle", "Model explanation · signed Grad-CAM");
     document.getElementById("realHeat").hidden = false;
     document.getElementById("realHeat").style.display = "block";
