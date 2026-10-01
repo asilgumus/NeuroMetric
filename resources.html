@@ -36,20 +36,43 @@
   }
   .report-back:hover{ border-color:var(--accent-line); color:var(--accent); background:var(--accent-soft); }
   .report-back svg{ width:14px; height:14px; }
-  .res-page{ padding-top:56px; }
-  .res-block{ max-width:880px; margin:0 auto 18px; }
+  .res-page{ padding-top:32px; }
+  .res-page>.wrap{max-width:1200px}
+  .res-page .sec-head{margin-bottom:24px}
+  .res-page .eyebrow{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .res-page h1{font:600 clamp(28px,3vw,40px)/1.15 var(--disp);letter-spacing:-.03em;max-width:24ch}
+  .res-page .sec-lede{font-size:14px;max-width:68ch}
+  .res-nav{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 28px}
+  .res-nav a{padding:9px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:13px}
+  .res-nav a:hover{border-color:var(--accent);color:var(--accent)}
+  .res-block{max-width:none;margin:0 0 20px;padding:24px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .res-block .statement{font-size:20px}
+  .res-intro{font-size:13px;color:var(--mut);margin:10px 0 18px;line-height:1.6}
+  .res-metrics{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .res-metric{padding:18px;background:var(--band);border:1px solid var(--line2);border-radius:9px}
+  .res-metric h3{font:600 14px var(--sans)}
+  .res-number{display:block;font:600 32px/1.2 var(--disp);margin:12px 0 6px;color:var(--accent)}
+  .res-number small{font:400 13px var(--sans);color:var(--mut)}
+  .res-metric p{font-size:13px;margin:6px 0;color:var(--ink2)}
+  .res-source{display:grid;grid-template-columns:160px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line2);font-size:14px}
+  .res-source a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+  .res-source p{margin:0;color:var(--ink2);font-size:13px;line-height:1.6}
   .res-kv{ display:grid; grid-template-columns:200px 1fr; gap:14px 28px; padding:13px 0; border-top:1px solid var(--line2); }
   .res-kv:first-of-type{ margin-top:18px; border-top:1px solid var(--line); }
-  .res-kv b{ font:500 13px var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--mut); padding-top:2px; }
+  .res-kv b{ font:500 12px var(--mono); letter-spacing:.04em; text-transform:uppercase; color:var(--mut); padding-top:2px; }
   .res-kv p{ margin:0; font-size:14px; line-height:1.6; color:var(--ink2); }
   .res-list{ margin:14px 0 0; padding:0; list-style:none; display:grid; gap:0; }
   .res-list li{ display:grid; grid-template-columns:74px 96px 1fr; gap:18px; align-items:baseline;
                 padding:11px 0; border-top:1px solid var(--line2); font-size:13.5px; color:var(--ink2); }
   .res-list i{ font:500 10px var(--mono); letter-spacing:.08em; color:var(--accent); font-style:normal; }
   .res-list u{ font:500 11px var(--mono); letter-spacing:.06em; color:var(--mut); text-decoration:none; }
-  .foot-note{ max-width:880px; margin:26px auto 0; font-size:13px; line-height:1.6; color:var(--mut); }
+  .foot-note{margin:24px 0 0;padding:18px;border-left:3px solid var(--accent);background:var(--accent-soft);font-size:13px;line-height:1.6;color:var(--ink2)}
   .res-main{ padding-bottom:64px; }
   @media (max-width:760px){
+    .res-block{padding:18px}
+    .res-metrics,.res-source{grid-template-columns:minmax(0,1fr)}
+    .res-source{gap:6px}
+    .res-kv p{overflow-wrap:anywhere}
     .res-kv{ grid-template-columns:1fr; gap:5px; }
     .res-list li{ grid-template-columns:1fr auto; }
     .res-list i{ display:none; }
@@ -74,33 +97,48 @@
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Resources</p>
-      <h2 class="statement">What we have built, and what remains to validate.</h2>
-      <p class="sec-lede">Implementation facts and validation results for the research prototype. Selected dashboard cases carry real model outputs and are labeled there. Metrics below come from saved validation and held-out test predictions.</p>
+      <h1>The research behind NeuroMetric.</h1>
+      <p class="sec-lede">How the model works, what we measured, and where the data comes from. A transparent technical reference for the precomputed research demo.</p>
     </div>
+    <nav class="res-nav" aria-label="Resource sections"><a href="#model-card">Model &amp; pipeline</a><a href="#performance">Performance</a><a href="#releases">Implemented features</a><a href="#data">Data &amp; privacy</a></nav>
 
     <section class="res-block">
-      <h2 class="statement" id="model-card" style="scroll-margin-top:80px">Model card</h2>
+      <h2 class="statement" id="model-card" style="scroll-margin-top:80px">Model &amp; pipeline</h2>
       <div class="kv-wrap">
         <div class="res-kv"><b>Intended use</b><p>Research-only estimation of chronological age from T1 MRI using a pretrained, fine-tuned SFCN. Brain-age gap is predicted minus chronological age; it is not ground-truth biological age.</p></div>
         <div class="res-kv"><b>Inputs</b><p>The local pipeline uses 3D T1-weighted NIfTI (.nii / .nii.gz); the OASIS preparation tool also reads Analyze .img/.hdr pairs. SynthStrip brain extraction, FSL FAST bias correction and 12-DOF FLIRT alignment to 1 mm MNI precede a 160 × 192 × 160 SFCN input. No browser upload or DICOM service is implemented.</p></div>
-        <div class="res-kv"><b>Outputs</b><p>Whole-brain predicted age, raw age gap and registration QC. The regional dashboard is available with illustrative regional values; region-specific validation remains pending. Selected MRI viewers show real signed Grad-CAM. No validated percentile or individual confidence interval is available.</p></div>
-        <div class="res-kv"><b>Performance</b><p>Locked held-out evaluation of the current best checkpoint (V3 fine-tuned SFCN, contrast-cont4): 218 validation participants (MAE 3.41 years); IXI historical test, 85 scans (MAE 3.60 — R² 0.935, 76.5% within ±5 years); external DLBS cohort, 464 scans (MAE 5.17 — R² 0.842, 60.3% within ±5 years). The checkpoint was selected by validation MAE only. These are research results, not clinical accuracy.</p></div>
+        <div class="res-kv"><b>Outputs</b><p>Whole-brain predicted age and raw age gap. Selected examples include real signed Grad-CAM and MRI-derived FastSurfer regional volumes. Volumes are not regional brain ages, and attention maps are not disease-risk maps. Healthy-control percentiles and calibrated individual confidence intervals are not available.</p></div>
         <div class="res-kv"><b>Limitations</b><p>Not a diagnostic device. Alzheimer-cohort evaluation, clinical validation, individual uncertainty, regional validity and longitudinal reliability remain unconfirmed. Repeated validation tuning can inflate estimates. Pretraining overlap with OASIS is unaudited; exploratory results cannot be called independent clinical validation.</p></div>
-        <div class="res-kv"><b>Version</b><p>Fine-tuned 3D SFCN; contrast-cont4 (epoch 22) is the documented current checkpoint. An earlier generation, the V2 CNN1 ensemble, reached test MAE 6.49 on the IXI split; no clinical calibration is claimed. Subsequent runs must be compared before selecting a final model.</p></div>
+        <div class="res-kv"><b>Version</b><p>Pretrained, fine-tuned 3D SFCN · contrast-cont4 · best checkpoint at epoch 22. PyTorch inference uses the saved checkpoint; the website displays precomputed results and does not run the model in the browser.</p></div>
       </div>
     </section>
 
+    <section class="res-block" aria-labelledby="performance">
+      <h2 class="statement" id="performance">Held-out performance</h2>
+      <p class="res-intro">Measured from saved predictions of the same checkpoint. MAE is mean absolute chronological-age error; lower is better. Selected dashboard examples are not representative of overall accuracy.</p>
+      <div class="res-metrics">
+        <article class="res-metric"><h3>IXI · historical test split</h3><strong class="res-number">3.60 <small>years MAE</small></strong><p>85 scans · R² 0.935</p><p>Within ±1 year: 11.8% · Within ±5 years: 76.5%</p><p>Rounded-year match: 3.5% (3 / 85)</p></article>
+        <article class="res-metric"><h3>DLBS · external cohort</h3><strong class="res-number">5.17 <small>years MAE</small></strong><p>464 scans · R² 0.842</p><p>Within ±1 year: 14.9% · Within ±5 years: 60.3%</p><p>Rounded-year match: 7.5% (35 / 464)</p></article>
+      </div>
+      <p class="res-intro">Checkpoint selection used validation MAE, not these held-out results. These figures measure chronological-age prediction, not Alzheimer detection, biological-age accuracy or clinical safety.</p>
+    </section>
+
     <section class="res-block">
-      <h2 class="statement" id="releases" style="scroll-margin-top:80px">Release notes</h2>
+      <h2 class="statement" id="releases" style="scroll-margin-top:80px">Implemented features</h2>
       <ul class="res-list">
-        <li><u>Model</u><i>completed</i><span>Pretrained SFCN fine-tuning on 924 usable IXI/SALD/NIMH training participants; fixed 218-person validation and saved checkpoint hashes.</span></li>
-        <li><u>OASIS-1</u><i>in progress</i><span>Authorized download and automated preprocessing of baseline T1 scans for up to 416 people. Research cohort includes 100 CDR-defined dementia cases. This does not establish biomarker-confirmed Alzheimer diagnosis for every case.</span></li>
-        <li><u>Dashboard</u><i>demo</i><span>Whole-brain and regional presentation, real signed Grad-CAM on selected cases and recorded OASIS-2 visit histories. Validated longitudinal change rates remain future work.</span></li>
+        <li><u>Prediction</u><i>implemented</i><span>Pretrained SFCN fine-tuning, saved model checkpoints and held-out chronological-age evaluation.</span></li>
+        <li><u>Attention</u><i>implemented</i><span>Patient-specific signed Grad-CAM with axial, coronal and sagittal view switching. Attribution is explanatory, not diagnostic.</span></li>
+        <li><u>Regions</u><i>measured</i><span>Selected IXI and DLBS examples have bilateral hippocampal and cortical gray-matter volumes, with their own segmentation images. Technical review is distinct from clinical validation.</span></li>
+        <li><u>Follow-up</u><i>exploratory</i><span>OAS2_0007 displays its own recorded visits, 518 days apart. Registration review is pending; a validated aging rate is not claimed.</span></li>
       </ul>
     </section>
 
     <section class="res-block">
       <h2 class="statement" id="data" style="scroll-margin-top:80px">Data policy</h2>
+      <p class="res-intro">Public-access research datasets have their own licenses and access conditions. Public availability does not mean unrestricted use.</p>
+      <div class="res-source"><a href="https://brain-development.org/ixi-dataset/" target="_blank" rel="noopener noreferrer">IXI Dataset ↗</a><p>Training/validation source and historical held-out test split. Selected dashboard cases: IXI170, IXI361 and IXI566. CC BY-SA 3.0 attribution applies.</p></div>
+      <div class="res-source"><a href="https://openneuro.org/datasets/ds004856/versions/1.2.0" target="_blank" rel="noopener noreferrer">DLBS / OpenNeuro ↗</a><p>External evaluation dataset ds004856. Selected dashboard example: sub-3898. Dataset license recorded in the project catalog: CC0 1.0.</p></div>
+      <div class="res-source"><a href="https://sites.wustl.edu/oasisbrains/" target="_blank" rel="noopener noreferrer">OASIS ↗</a><p>OASIS-1 supports exploratory dementia-cohort work; OASIS-2 provides longitudinal research examples. Follow the applicable access agreement and citation requirements. A dementia label is not necessarily biomarker-confirmed Alzheimer disease.</p></div>
       <div class="kv-wrap">
         <div class="res-kv"><b>Accepted input</b><p>This static site accepts no MRI uploads and performs no inference. Local research tools should receive only appropriately de-identified data; age is required to compute an age gap.</p></div>
         <div class="res-kv"><b>Anonymization</b><p>Training and evaluation rely on public-access/de-identified research data under their own terms. MRI conversion is not a certified anonymization or defacing service; do not assume processing removes every identifying feature.</p></div>
@@ -109,7 +147,7 @@
       </div>
     </section>
 
-    <p class="foot-note">NeuroMetric is a research-grade decision-support prototype; it is not intended for clinical diagnosis, determination or treatment decisions. Questions: <a class="fmail" style="border-bottom:none;display:inline;padding:0" href="mailto:info@neurometric.health">info@neurometric.health</a></p>
+    <p class="foot-note">Research demonstration only. Not a diagnostic device or a substitute for clinical assessment. No visitor MRI uploads, live inference or hosted patient database are implemented.</p>
   </div>
 </main>
 </body>
