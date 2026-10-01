@@ -1,0 +1,206 @@
+{
+  "DLBS:sub-3898": {
+    "patient_id": "DLBS:sub-3898",
+    "state": "visual_review_pending",
+    "regions": [
+      {
+        "region": "Hippocampus (bilateral)",
+        "voxel_count": 9516,
+        "volume_ml": 9.516,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Temporal cortical gray matter (bilateral)",
+        "voxel_count": 113487,
+        "volume_ml": 113.487,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Frontal cortical gray matter (bilateral)",
+        "voxel_count": 171582,
+        "volume_ml": 171.582,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Parietal cortical gray matter (bilateral)",
+        "voxel_count": 114243,
+        "volume_ml": 114.243,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Occipital cortical gray matter (bilateral)",
+        "voxel_count": 52888,
+        "volume_ml": 52.888,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      }
+    ],
+    "native_sha256": "a50388373d165a984c596841795db3e1ea66b90389693a4229a3ee60696aab10",
+    "image": "assets/dlbs3898-regional.png",
+    "segmentation_sha256": "6d0dd1213c7e3b38dc29a8fa155df987fde8213bdbd9d71532f0887f9384a0b5",
+    "clinical_validation": false,
+    "method": "FastSurfer VINN bilateral DKT gray-matter groups; excludes white matter, cingulate and insula"
+  },
+  "IXI:IXI361": {
+    "patient_id": "IXI:IXI361",
+    "state": "visual_review_pending",
+    "regions": [
+      {
+        "region": "Hippocampus (bilateral)",
+        "voxel_count": 10806,
+        "volume_ml": 8.90386962890625,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Temporal cortical gray matter (bilateral)",
+        "voxel_count": 136601,
+        "volume_ml": 112.55575561523438,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Frontal cortical gray matter (bilateral)",
+        "voxel_count": 196032,
+        "volume_ml": 161.525390625,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Parietal cortical gray matter (bilateral)",
+        "voxel_count": 132762,
+        "volume_ml": 109.39251708984375,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Occipital cortical gray matter (bilateral)",
+        "voxel_count": 50528,
+        "volume_ml": 41.6337890625,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      }
+    ],
+    "native_sha256": "699eefdff872968c684b06cf5bc908a5cc79d2e7a13f31588624c2e5948e69d9",
+    "image": "assets/ixi361-regional.png",
+    "segmentation_sha256": "0ac265319161d993482137084179b45b2ea71a47032972134fb88da9e012d3e3",
+    "clinical_validation": false,
+    "method": "FastSurfer VINN bilateral DKT gray-matter groups; excludes white matter, cingulate and insula"
+  },
+  "IXI:IXI170": {
+    "patient_id": "IXI:IXI170",
+    "state": "visual_review_pending",
+    "regions": [
+      {
+        "region": "Hippocampus (bilateral)",
+        "voxel_count": 9773,
+        "volume_ml": 8.052703857421875,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Temporal cortical gray matter (bilateral)",
+        "voxel_count": 130172,
+        "volume_ml": 107.2584228515625,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Frontal cortical gray matter (bilateral)",
+        "voxel_count": 170444,
+        "volume_ml": 140.4415283203125,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Parietal cortical gray matter (bilateral)",
+        "voxel_count": 108998,
+        "volume_ml": 89.81158447265625,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Occipital cortical gray matter (bilateral)",
+        "voxel_count": 47250,
+        "volume_ml": 38.93280029296875,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      }
+    ],
+    "native_sha256": "8e724ade8cd530be67bf11c322dca2fa56961271dce17b1df961c259a86025ca",
+    "image": "assets/ixi170-regional.png",
+    "segmentation_sha256": "ddb65197749d59965b2c7567aa6d53c82dac20ebb95d5a00b256c57a784cd327",
+    "clinical_validation": false,
+    "method": "FastSurfer VINN bilateral DKT gray-matter groups; excludes white matter, cingulate and insula"
+  },
+  "IXI:IXI566": {
+    "patient_id": "IXI:IXI566",
+    "state": "visual_review_pending",
+    "regions": [
+      {
+        "region": "Hippocampus (bilateral)",
+        "voxel_count": 10741,
+        "volume_ml": 8.850311279296875,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Temporal cortical gray matter (bilateral)",
+        "voxel_count": 108171,
+        "volume_ml": 89.13015747070312,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Frontal cortical gray matter (bilateral)",
+        "voxel_count": 169371,
+        "volume_ml": 139.55740356445312,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Parietal cortical gray matter (bilateral)",
+        "voxel_count": 114648,
+        "volume_ml": 94.467041015625,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      },
+      {
+        "region": "Occipital cortical gray matter (bilateral)",
+        "voxel_count": 53713,
+        "volume_ml": 44.258148193359375,
+        "status": "measured",
+        "regional_brain_age": null,
+        "missing_labels": []
+      }
+    ],
+    "native_sha256": "224fa7e4cfbb0a46a427a93e0d72165d37cff4dae461d848fb59204cab89eb0c",
+    "image": "assets/ixi566-regional.png",
+    "segmentation_sha256": "4b30ec3ffb7388fb7c986b106eb3725e21f5732f1d70105333ff71676c929347",
+    "clinical_validation": false,
+    "method": "FastSurfer VINN bilateral DKT gray-matter groups; excludes white matter, cingulate and insula"
+  }
+}

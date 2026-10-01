@@ -40,7 +40,7 @@
 
   --shadow: 0 1px 2px rgba(11,18,32,.04), 0 20px 44px -26px rgba(11,18,32,.28);
   --shadow-deep: 0 30px 70px -30px rgba(0,0,0,.6);
-  --pad: clamp(24px, 4.5vw, 80px);
+  --pad: clamp(20px, 3.5vw, 64px);
 }
 
 /* ---------- taban ---------- */
@@ -187,19 +187,19 @@ h1,h2,h3,h4{ margin:0; }
   grid-template-columns:minmax(440px,.98fr) minmax(0,1.02fr);
   gap:clamp(40px,5vw,88px);
   align-items:center;
-  padding-top:96px;
+  padding-top:clamp(40px, 5vw, 80px);
 }
 .hero-copy{ padding-bottom:64px; }
 .hero h1{
   font-family:var(--disp);
-  font-size:clamp(40px,4.9vw,68px);
+  font-size:clamp(36px,3.7vw,62px);
   line-height:1.03; letter-spacing:-.035em; font-weight:600;
   margin-bottom:22px;
 }
 .hl{ color:var(--accent); }
 .lede{
   margin:0 0 34px;
-  font-size:clamp(17px,1.5vw,20px); line-height:1.55; color:var(--ink2);
+  font-size:clamp(16px,1.15vw,19px); line-height:1.55; color:var(--ink2);
   max-width:50ch;
   font-weight:400;
 }
@@ -663,4 +663,21 @@ h1,h2,h3,h4{ margin:0; }
   .tslide{ flex-basis:100%; padding:24px 24px 22px; }
   .foot-grid{ grid-template-columns:1fr; gap:34px; }
   .foot-bottom{ flex-direction:column; gap:8px; }
+}
+
+/* Compact desktop density without browser zoom or shrinking mobile text. */
+@media (min-width:761px) and (max-width:1600px){
+  .nav-inner{height:64px;gap:24px}
+  .brand-mark{width:46px;height:46px}
+  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+  .hero-copy{padding-bottom:36px}
+  .hero-stats{margin-bottom:36px;padding-top:20px}
+  .eyebrow{font-size:clamp(25px,2.1vw,34px)}
+  .statement{font-size:clamp(18px,1.4vw,22px)}
+  .sec,.dash{padding-block:64px}
+  .sec-head{margin-bottom:32px}
+  .panel,.bcard,.report{padding:20px}
+}
+@media (min-width:761px) and (max-width:1000px){
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
 }

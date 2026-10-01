@@ -3,6 +3,7 @@
 Serial CPU execution limits RAM usage. Outputs remain pending visual QC.
 """
 import json
+import argparse
 import os
 from pathlib import Path
 import subprocess
@@ -18,10 +19,18 @@ from tools.export_fastsurfer_candidate_regions import grouped_volumes
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--case", choices=["dlbs3898", "ixi361", "ixi170", "ixi566"])
+    args = parser.parse_args()
     states = {}
     assets = ROOT / "assets/selected-regional-cases.js"
+    if args.case and assets.exists():
+        prefix = "window.NEUROMETRIC_SELECTED_REGIONS = "
+        states = json.loads(assets.read_text().removeprefix(prefix).strip().removesuffix(";"))
     targets = [("dlbs3898", "DLBS:sub-3898", "dlbs"), ("ixi361", "IXI:IXI361", "ixi"),
                ("ixi170", "IXI:IXI170", "ixi"), ("ixi566", "IXI:IXI566", "ixi")]
+    if args.case:
+        targets = [target for target in targets if target[0] == args.case]
     def publish():
         assets.write_text("window.NEUROMETRIC_SELECTED_REGIONS = " + json.dumps(states).replace("<", "\\u003c") + ";\n")
         write_json(ROOT / "assets/selected-regional-cases.json", states)

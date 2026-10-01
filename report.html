@@ -96,6 +96,22 @@
   }
 </style>
 <style>
+  /* Scale the desktop dashboard to CSS viewport width, not monitor resolution. */
+  @media(min-width:761px){
+    .report-main>.wrap,.nav-inner{width:100%;max-width:1600px}
+    .report-sheet{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);padding:clamp(20px,1.8vw,32px);gap:clamp(20px,1.8vw,28px)}
+    .pad-col .pad-val,.pad-col:last-child .pad-val{font-size:clamp(34px,2.6vw,48px)}
+    .v-v{font-size:clamp(16px,1.15vw,20px)}
+    .v-v.v-soft{font-size:clamp(15px,1.05vw,18px)}
+    .heat-cap,.viewer-hint,.lt-note,.technical-details,.pad-ci,.ban-sub,.attribution-legend{font-size:clamp(13px,.9vw,15px)}
+    .lt-row span:first-child,.lt-row span:last-child,.viewer-toolbar{font-size:clamp(14px,1vw,16px)}
+    .regional-details>summary,.technical-details>summary{font-size:clamp(15px,1vw,17px)}
+    .report-sheet .heat-viz{max-height:clamp(320px,36vw,560px)}
+  }
+  .report-sheet>*{min-width:0}
+  .legend-ticks{gap:8px;flex-wrap:wrap}
+</style>
+<style>
   .report-page{padding-top:32px}.report-page .sec-head{margin-bottom:24px;max-width:none}.report-page .statement{font-size:clamp(28px,4vw,40px)}.report-page .sec-lede{font-size:15px;max-width:none;margin-top:12px}
   .report-sheet{max-width:1100px;padding:24px;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,1fr);gap:24px;align-items:start}
   .report-sheet .report-head,.pat-row,.pad-wrap,.regional-details,.technical-details{grid-column:1/-1;margin:0}.report-sheet .report-head{flex-wrap:wrap;gap:8px;padding-bottom:14px}.report-sheet .report-head span{font-size:11px;overflow-wrap:anywhere}.pat-row{padding:0}.pat-k,.pat-v{letter-spacing:.04em}
@@ -495,7 +511,7 @@
       setTxt("regionalMethod", "Volumes will appear after this patient's own MRI segmentation completes.");
       return;
     }
-    setTxt("regionalMethod", "Bilateral gray-matter volumes · " + (result.state === "visual_review_pending" ? "visual QC pending" : "technically reviewed") + ". Not regional ages or diagnosis; white matter, cingulate and insula excluded.");
+    setTxt("regionalMethod", "MRI-derived regional volumes · " + (result.state === "visual_review_pending" ? "visual QC pending" : "technically reviewed") + ". Age-related atrophy cannot be assessed without age-matched reference values. These are not regional age predictions or a diagnosis; white matter, cingulate and insula excluded.");
     result.regions.forEach(function(row) {
       var item=document.createElement("div"), label=document.createElement("span"), value=document.createElement("span");
       item.className="lt-row";label.textContent=row.region;value.textContent=Number(row.volume_ml).toFixed(2)+" mL";
