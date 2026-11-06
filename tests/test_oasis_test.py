@@ -35,6 +35,7 @@ class OasisTests(unittest.TestCase):
         self.assertEqual(stats["mean_paired_gap_difference_years"], 5.)
         self.assertEqual(stats["bootstrap_95_ci"], [5., 5.])
 
+    @unittest.skipUnless(LOCK.is_file(), "model lock and checkpoints are kept locally, not in the repo")
     def test_locked_real_model_loads(self):
         lock = json.loads(LOCK.read_text())
         checkpoint = ROOT / lock["checkpoint"]
