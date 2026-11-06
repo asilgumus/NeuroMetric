@@ -6,6 +6,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 BACKUP = ROOT / "backups/site-before-content-k7jdzLey"
+ARTIFACTS = ROOT / "artifacts"
 
 
 class Page(HTMLParser):
@@ -24,6 +25,7 @@ class Page(HTMLParser):
 
 
 class SiteContentTest(unittest.TestCase):
+    @unittest.skipUnless(BACKUP.is_dir(), "backups/ snapshot is kept locally, not in the repo")
     def test_original_backup_and_design_preserved(self):
         for file in ("styles.css", "app.js", "logo.png"):
             self.assertEqual((ROOT / file).read_bytes(), (BACKUP / file).read_bytes())
@@ -57,6 +59,7 @@ class SiteContentTest(unittest.TestCase):
         self.assertIn("Mock testimonials", index)
         self.assertIn("not verified endorsements or project results", index)
 
+    @unittest.skipUnless(ARTIFACTS.is_dir(), "artifacts/ training outputs are kept locally, not in the repo")
     def test_validation_figures_match_saved_predictions(self):
         source = ROOT / "artifacts/v3/autopilot/brainage-v3-train-sfcn-deeper-cont3/outputs/training/best_validation_predictions.csv"
         with source.open() as stream:
